@@ -17,8 +17,8 @@ const { title, faqs } = Astro.props;
     </div>
 
     <div class="faq-list">
-      {faqs.map((faq) => (
-        <details class="faq-item reveal">
+      {faqs.map((faq, i) => (
+        <details class="faq-item reveal" style={`--reveal-delay: ${Math.min(i * 60, 240)}ms`}>
           <summary>
             <span>{faq.q}</span>
             <span class="faq-icon" aria-hidden="true">+</span>

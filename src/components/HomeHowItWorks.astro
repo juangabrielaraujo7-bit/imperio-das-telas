@@ -38,7 +38,7 @@ const steps = [
 
     <div class="steps">
       {steps.map((step, i) => (
-        <div class="step reveal">
+        <div class="step reveal" style={`--reveal-delay: ${i * 100}ms`}>
           <span class="step-icon"><Icon name={step.icon} size={20} /></span>
           <span class="step-n">{step.n}</span>
           <div class="step-body">

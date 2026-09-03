@@ -11,8 +11,8 @@ import Icon from './Icon.astro';
     </div>
 
     <div class="grid grid-4">
-      {brands.map((brand) => (
-        <a class="brand-card surface reveal" href={`/${brand.slug}`}>
+      {brands.map((brand, i) => (
+        <a class="brand-card surface reveal reveal-scale" style={`--reveal-delay: ${i * 70}ms`} href={`/${brand.slug}`}>
           <span class="brand-icon"><Icon name="phone" size={20} /></span>
           <span class="brand-name">{brand.name}</span>
           <span class="brand-link">Ver mais →</span>
@@ -20,7 +20,8 @@ import Icon from './Icon.astro';
       ))}
 
       <a
-        class="brand-card surface reveal"
+        class="brand-card surface reveal reveal-scale"
+        style={`--reveal-delay: ${brands.length * 70}ms`}
         href={whatsappLink('Olá! Meu aparelho é de outra marca, gostaria de um orçamento.')}
         target="_blank"
         rel="noopener noreferrer nofollow"
@@ -53,6 +54,7 @@ import Icon from './Icon.astro';
   .brand-card:hover .brand-icon {
     background: var(--ink);
     color: #fff;
+    transform: rotate(-6deg) scale(1.08);
   }
 
   .brand-icon {
@@ -65,7 +67,7 @@ import Icon from './Icon.astro';
     background: var(--bg);
     border: 1px solid var(--line);
     color: var(--silver);
-    transition: background var(--transition), color var(--transition);
+    transition: background var(--transition), color var(--transition), transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
   .brand-name {

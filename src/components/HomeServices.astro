@@ -12,8 +12,8 @@ import Icon from './Icon.astro';
     </div>
 
     <div class="grid grid-3">
-      {services.map((service) => (
-        <article class="card surface reveal">
+      {services.map((service, i) => (
+        <article class="card surface reveal" style={`--reveal-delay: ${Math.min(i * 70, 280)}ms`}>
           <div class="card-icon">
             <Icon name={service.icon} />
           </div>
@@ -28,7 +28,7 @@ import Icon from './Icon.astro';
         </article>
       ))}
 
-      <article class="card surface reveal">
+      <article class="card surface reveal" style={`--reveal-delay: ${Math.min(services.length * 70, 280)}ms`}>
         <div class="card-icon">
           <Icon name="other" />
         </div>
@@ -57,8 +57,7 @@ import Icon from './Icon.astro';
   }
 
   .card:hover .card-icon {
-    background: var(--ink);
-    color: #fff;
+    transform: rotate(-6deg) scale(1.08);
   }
 
   .card-icon {
@@ -71,7 +70,7 @@ import Icon from './Icon.astro';
     background: var(--ink);
     color: #fff;
     margin-bottom: 20px;
-    transition: background var(--transition), color var(--transition);
+    transition: transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
   .card h3 {
