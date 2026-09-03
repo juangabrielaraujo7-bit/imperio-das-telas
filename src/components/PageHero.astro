@@ -1,0 +1,80 @@
+---
+import WhatsappCta from './WhatsappCta.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  eyebrow: string;
+  h1: string;
+  intro: string;
+  whatsappMessage: string;
+  signsLabel?: string;
+  signs?: string[];
+}
+
+const { eyebrow, h1, intro, whatsappMessage, signsLabel, signs } = Astro.props;
+---
+
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow">{eyebrow}</span>
+    <h1>{h1}</h1>
+    <p class="lead">{intro}</p>
+    <WhatsappCta message={whatsappMessage} />
+
+    {signs && signs.length > 0 && (
+      <div class="signs surface reveal">
+        <h2>{signsLabel}</h2>
+        <ul>
+          {signs.map((sign) => (
+            <li>
+              <Icon name="check" size={18} />
+              <span>{sign}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    padding: 64px 0 88px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .lead {
+    max-width: 640px;
+    font-size: 1.05rem;
+    margin-bottom: 28px;
+  }
+
+  .signs {
+    margin-top: 48px;
+    padding: 32px;
+    max-width: 560px;
+  }
+
+  .signs h2 {
+    font-size: 1.1rem;
+    margin-bottom: 18px;
+  }
+
+  .signs ul {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .signs li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--ink-2);
+  }
+
+  .signs :global(svg) {
+    flex-shrink: 0;
+    color: var(--silver);
+  }
+</style>

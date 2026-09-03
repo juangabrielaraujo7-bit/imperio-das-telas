@@ -1,0 +1,106 @@
+---
+import { services, whatsappLink } from '../data/business';
+import Icon from './Icon.astro';
+---
+
+<section class="section" id="servicos">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Serviços</span>
+      <h2>Reparo especializado para o seu aparelho</h2>
+      <p>Diagnóstico gratuito e orçamento sem compromisso antes de qualquer serviço.</p>
+    </div>
+
+    <div class="grid grid-3">
+      {services.map((service) => (
+        <article class="card surface reveal">
+          <div class="card-icon">
+            <Icon name={service.icon} />
+          </div>
+          <h3>{service.title}</h3>
+          <p>{service.description}</p>
+          <div class="card-actions">
+            <a class="details" href={`/${service.slug}`}>Ver detalhes →</a>
+            <a class="wa-link" href={whatsappLink(service.whatsappMessage)} target="_blank" rel="noopener noreferrer nofollow">
+              WhatsApp
+            </a>
+          </div>
+        </article>
+      ))}
+
+      <article class="card surface reveal">
+        <div class="card-icon">
+          <Icon name="other" />
+        </div>
+        <h3>Outros defeitos</h3>
+        <p>Alto-falante, microfone, botões, conector de fone e outros reparos.</p>
+        <div class="card-actions">
+          <a class="wa-link" href={whatsappLink('Olá! Vim pelo site e tenho outro defeito no meu aparelho, gostaria de um orçamento.')} target="_blank" rel="noopener noreferrer nofollow">
+            Falar no WhatsApp
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .card {
+    padding: 28px;
+    transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--ink);
+    box-shadow: 0 16px 32px rgba(18, 18, 20, 0.06);
+  }
+
+  .card-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    color: var(--silver);
+    margin-bottom: 20px;
+  }
+
+  .card h3 {
+    margin-bottom: 8px;
+  }
+
+  .card p {
+    margin-bottom: 20px;
+    font-size: 0.92rem;
+  }
+
+  .card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+  }
+
+  .details {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .wa-link {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--ink-2);
+    transition: color var(--transition);
+  }
+
+  .wa-link:hover {
+    color: var(--ink);
+  }
+</style>

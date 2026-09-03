@@ -1,0 +1,150 @@
+---
+import { business, nav, services, whatsappLink } from '../data/business';
+import Icon from './Icon.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="logo">
+        <span class="logo-mark" aria-hidden="true"></span>
+        Império das Telas
+      </a>
+      <p>Assistência técnica de celulares na Freguesia do Ó, Zona Norte de São Paulo. Diagnóstico honesto, peças de qualidade e garantia real.</p>
+      <a class="btn btn-primary" href={whatsappLink('Olá! Vim pelo site e gostaria de um orçamento.')} target="_blank" rel="noopener noreferrer nofollow">
+        <Icon name="whatsapp" size={18} />
+        Chamar no WhatsApp
+      </a>
+    </div>
+
+    <div class="footer-col">
+      <h3>Navegação</h3>
+      <ul>
+        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h3>Serviços</h3>
+      <ul>
+        {services.map((s) => <li><a href={`/${s.slug}`}>{s.title}</a></li>)}
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h3>Contato</h3>
+      <ul class="contact-list">
+        <li><Icon name="pin" size={18} /><span>{business.addressStreet} — {business.neighborhood}, {business.city} - {business.state}, {business.zip}</span></li>
+        <li><Icon name="phone" size={18} /><span>{business.phoneDisplay}</span></li>
+        <li><Icon name="clock" size={18} /><span>{business.hours}</span></li>
+        <li><Icon name="instagram" size={18} /><a href={business.instagram} target="_blank" rel="noopener noreferrer">@imperiodastelas_</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <p>&copy; {year} Império das Telas. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    padding-top: 64px;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1.3fr;
+    gap: 40px;
+    padding-bottom: 48px;
+  }
+
+  .footer-brand .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+
+  .logo-mark {
+    width: 12px;
+    height: 12px;
+    border-radius: 4px;
+    background: var(--ink);
+    display: inline-block;
+  }
+
+  .footer-brand p {
+    max-width: 320px;
+    margin-bottom: 20px;
+  }
+
+  .footer-col h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--silver);
+    margin-bottom: 16px;
+  }
+
+  .footer-col ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-col a {
+    color: var(--ink-2);
+    font-size: 0.92rem;
+    transition: color var(--transition);
+  }
+
+  .footer-col a:hover {
+    color: var(--ink);
+  }
+
+  .contact-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: var(--ink-2);
+    font-size: 0.92rem;
+  }
+
+  .contact-list :global(svg) {
+    flex-shrink: 0;
+    color: var(--silver);
+    margin-top: 2px;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid var(--line);
+    padding: 22px 24px;
+  }
+
+  .footer-bottom p {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--silver);
+  }
+
+  @media (max-width: 900px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+</style>

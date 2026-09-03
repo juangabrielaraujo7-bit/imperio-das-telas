@@ -1,0 +1,108 @@
+---
+const steps = [
+  {
+    n: '01',
+    title: 'Fale com a gente',
+    text: 'Chame no WhatsApp e conte o que está acontecendo com o seu aparelho.',
+  },
+  {
+    n: '02',
+    title: 'Diagnóstico gratuito',
+    text: 'Avaliamos o aparelho e identificamos a causa real do problema, sem custo.',
+  },
+  {
+    n: '03',
+    title: 'Orçamento sem compromisso',
+    text: 'Você recebe o valor exato antes de aprovar qualquer serviço.',
+  },
+  {
+    n: '04',
+    title: 'Reparo com garantia',
+    text: 'Executamos o conserto com peças de qualidade e garantia no serviço.',
+  },
+];
+---
+
+<section class="section" id="como-funciona">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Como funciona</span>
+      <h2>Do primeiro contato ao aparelho na sua mão</h2>
+    </div>
+
+    <div class="steps">
+      {steps.map((step, i) => (
+        <div class="step reveal">
+          <span class="step-n">{step.n}</span>
+          <div class="step-body">
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </div>
+          {i < steps.length - 1 && <span class="step-line" aria-hidden="true"></span>}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+
+  .step {
+    position: relative;
+    padding: 0 24px 0 0;
+  }
+
+  .step:first-child {
+    padding-left: 0;
+  }
+
+  .step-n {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--silver);
+    margin-bottom: 14px;
+    letter-spacing: 0.04em;
+  }
+
+  .step-body h3 {
+    font-size: 1.05rem;
+    margin-bottom: 8px;
+  }
+
+  .step-body p {
+    font-size: 0.9rem;
+  }
+
+  .step-line {
+    display: none;
+  }
+
+  @media (min-width: 861px) {
+    .step:not(:last-child) {
+      border-right: 1px solid var(--line);
+    }
+  }
+
+  @media (max-width: 860px) {
+    .steps {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    .step {
+      padding: 0 0 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .step:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+</style>

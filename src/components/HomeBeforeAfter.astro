@@ -1,0 +1,150 @@
+---
+import WhatsappCta from './WhatsappCta.astro';
+
+const videos = [
+  { id: 1, label: 'Troca de tela' },
+  { id: 2, label: 'Troca de bateria' },
+  { id: 3, label: 'Reparo em placa' },
+];
+---
+
+<section class="section" id="antes-e-depois">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Antes e depois</span>
+      <h2>Veja o resultado do nosso trabalho</h2>
+      <p>Aparelhos reais, recuperados na nossa bancada.</p>
+    </div>
+
+    <div class="grid grid-3">
+      {videos.map((v) => (
+        <div class="video-card surface reveal" data-video-card>
+          <div class="video-wrap">
+            <video
+              class="ba-video"
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              poster={`/img/videos/antes-depois-${v.id}.jpg`}
+              data-src={`/videos/antes-depois-${v.id}.mp4`}
+            >
+              <source src={`/videos/antes-depois-${v.id}.mp4`} type="video/mp4" />
+            </video>
+            <span class="video-fallback" data-video-fallback>
+              <span>Em breve</span>
+            </span>
+          </div>
+          <div class="video-caption">
+            <span>{v.label}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="ba-cta reveal">
+      <WhatsappCta message="Olá! Vi os vídeos de antes e depois no site e gostaria de um orçamento." />
+    </div>
+  </div>
+</section>
+
+<style>
+  .video-card {
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .video-wrap {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    background: var(--bg);
+  }
+
+  .ba-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .video-fallback {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    color: var(--silver);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .video-card.no-media .video-fallback {
+    display: flex;
+  }
+
+  .video-card.no-media .ba-video {
+    display: none;
+  }
+
+  .video-caption {
+    padding: 16px 20px;
+    border-top: 1px solid var(--line);
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+
+  .ba-cta {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+  }
+</style>
+
+<script>
+  const cards = document.querySelectorAll<HTMLElement>('[data-video-card]');
+
+  cards.forEach((card) => {
+    const video = card.querySelector('video');
+    if (!video) return;
+
+    const src = video.dataset.src;
+    if (!src) return;
+
+    const markNoMedia = () => card.classList.add('no-media');
+
+    // preload="metadata" starts fetching immediately, so the error may already
+    // have fired before this script runs — check the current state first.
+    if (video.error || video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) {
+      markNoMedia();
+      return;
+    }
+
+    video.addEventListener('error', markNoMedia, { once: true });
+
+    video.addEventListener('loadedmetadata', () => {
+      if (video.duration === 0 || Number.isNaN(video.duration)) {
+        markNoMedia();
+      }
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    const playObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const video = entry.target as HTMLVideoElement;
+          if (entry.isIntersecting) {
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    document.querySelectorAll('.ba-video').forEach((v) => playObserver.observe(v));
+  }
+</script>

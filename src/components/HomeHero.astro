@@ -1,0 +1,146 @@
+---
+import WhatsappCta from './WhatsappCta.astro';
+---
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-copy reveal">
+      <span class="eyebrow">Freguesia do Ó · Zona Norte de SP</span>
+      <h1>Conserto de celular com técnicos especializados e garantia real</h1>
+      <p class="lead">
+        Atendemos Freguesia do Ó, Vila Palmeiras, Limão, Casa Verde, Brasilândia e Cachoeirinha.
+        Diagnóstico honesto, peças de qualidade e orçamento sem compromisso — direto pelo WhatsApp.
+      </p>
+      <div class="hero-actions">
+        <WhatsappCta message="Olá! Vim pelo site e gostaria de um orçamento." />
+        <a class="btn btn-secondary" href="#servicos">Ver serviços</a>
+      </div>
+
+      <div class="hero-proof">
+        <strong>+[NÚMERO]</strong>
+        <span>aparelhos reparados na região</span>
+      </div>
+    </div>
+
+    <div class="hero-device reveal" aria-hidden="true">
+      <div class="device-frame">
+        <div class="device-notch"></div>
+        <div class="device-screen">
+          <div class="screen-line"></div>
+          <div class="screen-line short"></div>
+          <div class="screen-chip"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: 72px 0 96px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: 48px;
+  }
+
+  .hero-copy .lead {
+    max-width: 520px;
+    font-size: 1.08rem;
+    margin-bottom: 32px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .hero-proof {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .hero-proof strong {
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-proof span {
+    color: var(--ink-2);
+    font-size: 0.9rem;
+  }
+
+  .hero-device {
+    display: flex;
+    justify-content: center;
+  }
+
+  .device-frame {
+    width: 260px;
+    height: 520px;
+    border-radius: 42px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: 0 30px 60px rgba(18, 18, 20, 0.08);
+    padding: 18px;
+    position: relative;
+  }
+
+  .device-notch {
+    width: 90px;
+    height: 20px;
+    background: var(--ink);
+    border-radius: 999px;
+    margin: 0 auto 24px;
+  }
+
+  .device-screen {
+    height: calc(100% - 60px);
+    border-radius: 26px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    padding: 24px 18px;
+  }
+
+  .screen-line {
+    height: 10px;
+    border-radius: 6px;
+    background: var(--line);
+    margin-bottom: 12px;
+    width: 100%;
+  }
+
+  .screen-line.short {
+    width: 60%;
+  }
+
+  .screen-chip {
+    margin-top: 28px;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: var(--ink);
+  }
+
+  @media (max-width: 900px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-device {
+      order: -1;
+    }
+
+    .device-frame {
+      width: 200px;
+      height: 400px;
+    }
+  }
+</style>

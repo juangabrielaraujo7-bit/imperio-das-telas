@@ -1,0 +1,111 @@
+---
+const photos = [
+  { file: 'loja-1.jpg', alt: 'Fachada da loja Império das Telas na Freguesia do Ó' },
+  { file: 'loja-2.jpg', alt: 'Balcão de atendimento da assistência técnica na Freguesia do Ó' },
+  { file: 'bancada-1.jpg', alt: 'Bancada de reparo de celulares da Império das Telas' },
+  { file: 'bancada-2.jpg', alt: 'Técnico realizando conserto de celular na bancada' },
+  { file: 'loja-3.jpg', alt: 'Interior da loja Império das Telas na Freguesia do Ó' },
+  { file: 'bancada-3.jpg', alt: 'Ferramentas e equipamentos de reparo de celular' },
+];
+---
+
+<section class="section" id="sobre">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-copy reveal">
+        <span class="eyebrow">Sobre a loja</span>
+        <h2>Uma bancada de verdade, no coração da Freguesia do Ó</h2>
+        <p>
+          Somos uma assistência técnica local, especializada em celulares, com diagnóstico honesto e peças de
+          qualidade. Conheça um pouco da nossa loja e da nossa bancada de reparo, onde cada aparelho é tratado
+          com cuidado técnico.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-3 gallery">
+      {photos.map((photo) => (
+        <div class="photo surface reveal" data-photo>
+          <img
+            src={`/img/loja/${photo.file}`}
+            alt={photo.alt}
+            loading="lazy"
+            width="480"
+            height="360"
+            data-photo-img
+          />
+          <span class="photo-fallback" data-photo-fallback>Foto em breve</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-copy {
+    max-width: 620px;
+    margin-bottom: 40px;
+  }
+
+  .gallery {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .photo {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .photo-fallback {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    color: var(--silver);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .photo.no-media img {
+    display: none;
+  }
+
+  .photo.no-media .photo-fallback {
+    display: flex;
+  }
+
+  @media (max-width: 620px) {
+    .gallery {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-photo]').forEach((card) => {
+    const img = card.querySelector('img');
+    if (!img) return;
+
+    const markNoMedia = () => card.classList.add('no-media');
+
+    // The image may have already failed to load before this script runs.
+    if (img.complete && img.naturalWidth === 0) {
+      markNoMedia();
+      return;
+    }
+
+    img.addEventListener('error', markNoMedia, { once: true });
+  });
+</script>

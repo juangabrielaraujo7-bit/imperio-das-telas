@@ -1,0 +1,145 @@
+---
+import { business } from '../data/business';
+---
+
+<section class="section" id="orcamento">
+  <div class="container">
+    <div class="quote-box surface reveal">
+      <div class="quote-copy">
+        <span class="eyebrow">Orçamento rápido</span>
+        <h2>Conte o que aconteceu e receba seu orçamento no WhatsApp</h2>
+        <p>Preencha os dados abaixo. Nada é enviado para nenhum servidor — vamos só abrir o WhatsApp com a mensagem pronta.</p>
+      </div>
+
+      <form id="quote-form" class="quote-form" novalidate>
+        <div class="field">
+          <label for="q-nome">Nome</label>
+          <input id="q-nome" name="nome" type="text" autocomplete="name" required />
+        </div>
+
+        <div class="field">
+          <label for="q-tipo">Tipo de aparelho</label>
+          <select id="q-tipo" name="tipo" required>
+            <option value="" disabled selected>Selecione</option>
+            <option>Smartphone</option>
+            <option>Tablet</option>
+            <option>Outro</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="q-modelo">Marca / Modelo</label>
+          <input id="q-modelo" name="modelo" type="text" placeholder="Ex.: iPhone 12, Galaxy S21..." required />
+        </div>
+
+        <div class="field field-full">
+          <label for="q-defeito">Descrição do defeito</label>
+          <textarea id="q-defeito" name="defeito" rows="3" placeholder="Conte o que está acontecendo com o aparelho" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block field-full">
+          Enviar e abrir WhatsApp
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  .quote-box {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 40px;
+    padding: 48px;
+  }
+
+  .quote-copy p {
+    margin-top: 14px;
+  }
+
+  .quote-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .field-full {
+    grid-column: 1 / -1;
+  }
+
+  label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  input,
+  select,
+  textarea {
+    font-family: inherit;
+    font-size: 0.95rem;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--ink);
+    transition: border-color var(--transition);
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--ink);
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 90px;
+  }
+
+  @media (max-width: 860px) {
+    .quote-box {
+      grid-template-columns: 1fr;
+      padding: 32px 24px;
+    }
+
+    .quote-form {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script define:vars={{ waBase: business.whatsappBase }}>
+  const form = document.getElementById('quote-form');
+
+  if (form) {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const data = new FormData(form);
+      const nome = (data.get('nome') || '').toString().trim();
+      const tipo = (data.get('tipo') || '').toString().trim();
+      const modelo = (data.get('modelo') || '').toString().trim();
+      const defeito = (data.get('defeito') || '').toString().trim();
+
+      const lines = [
+        'Olá! Vim pelo site e gostaria de um orçamento.',
+        nome && `Nome: ${nome}`,
+        tipo && `Tipo de aparelho: ${tipo}`,
+        modelo && `Marca/Modelo: ${modelo}`,
+        defeito && `Defeito: ${defeito}`,
+      ].filter(Boolean);
+
+      const message = lines.join('\n');
+      const url = `${waBase}?text=${encodeURIComponent(message)}`;
+
+      window.open(url, '_blank', 'noopener,noreferrer');
+    });
+  }
+</script>

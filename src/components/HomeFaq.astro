@@ -1,0 +1,95 @@
+---
+const faqs = [
+  {
+    q: 'Quanto tempo demora o conserto?',
+    a: 'A maioria dos reparos, como troca de tela, bateria e conector de carga, é feita no mesmo dia. Casos mais complexos, como reparo em placa, podem levar mais tempo — sempre te avisamos o prazo antes de começar.',
+  },
+  {
+    q: 'O orçamento é gratuito?',
+    a: 'Sim. Fazemos o diagnóstico e passamos o orçamento sem nenhum custo e sem compromisso de fechar o serviço.',
+  },
+  {
+    q: 'Quais marcas vocês atendem?',
+    a: 'Atendemos iPhone, Samsung, Motorola, Xiaomi/Redmi/POCO e outras marcas. Se não tiver certeza, é só chamar no WhatsApp.',
+  },
+  {
+    q: 'As peças têm garantia?',
+    a: 'Sim, todas as peças utilizadas têm garantia. Qualquer problema relacionado ao serviço dentro do prazo de garantia é resolvido sem custo.',
+  },
+  {
+    q: 'Onde fica a loja?',
+    a: 'Ficamos na R. Antônio de Couros, 461, Freguesia do Ó, São Paulo - SP. Fácil acesso para quem vem de Vila Palmeiras, Limão, Casa Verde, Brasilândia e Cachoeirinha.',
+  },
+];
+---
+
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">FAQ</span>
+      <h2>Perguntas frequentes</h2>
+    </div>
+
+    <div class="faq-list">
+      {faqs.map((faq) => (
+        <details class="faq-item reveal">
+          <summary>
+            <span>{faq.q}</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </summary>
+          <p>{faq.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-list {
+    max-width: 760px;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--line);
+    padding: 22px 0;
+  }
+
+  .faq-item summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    list-style: none;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-icon {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    color: var(--ink-2);
+    font-size: 1.1rem;
+    transition: transform var(--transition), border-color var(--transition);
+  }
+
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+    border-color: var(--ink);
+  }
+
+  .faq-item p {
+    margin: 16px 0 0;
+    max-width: 620px;
+  }
+</style>

@@ -1,0 +1,192 @@
+---
+import { nav } from '../data/business';
+import WhatsappCta from './WhatsappCta.astro';
+---
+
+<header class="site-header" id="site-header">
+  <div class="container header-inner">
+    <a href="/" class="logo" aria-label="Império das Telas — página inicial">
+      <span class="logo-mark" aria-hidden="true"></span>
+      Império das Telas
+    </a>
+
+    <nav class="main-nav" aria-label="Navegação principal">
+      <ul>
+        {nav.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="header-cta">
+      <WhatsappCta
+        message="Olá! Vim pelo site e gostaria de um orçamento."
+        size="sm"
+      />
+    </div>
+
+    <button
+      id="menu-toggle"
+      class="menu-toggle"
+      aria-label="Abrir menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <line x1="4" y1="7" x2="20" y2="7"></line>
+        <line x1="4" y1="12" x2="20" y2="12"></line>
+        <line x1="4" y1="17" x2="20" y2="17"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="mobile-menu" hidden>
+    <ul>
+      {nav.map((item) => (
+        <li><a href={item.href}>{item.label}</a></li>
+      ))}
+    </ul>
+    <WhatsappCta
+      message="Olá! Vim pelo site e gostaria de um orçamento."
+      class="btn-block"
+    />
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(248, 249, 250, 0.72);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .logo-mark {
+    width: 12px;
+    height: 12px;
+    border-radius: 4px;
+    background: var(--ink);
+    display: inline-block;
+  }
+
+  .main-nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .main-nav ul {
+    display: flex;
+    gap: 28px;
+  }
+
+  .main-nav a {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--ink-2);
+    transition: color var(--transition);
+  }
+
+  .main-nav a:hover {
+    color: var(--ink);
+  }
+
+  .header-cta {
+    flex-shrink: 0;
+  }
+
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 8px;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .mobile-menu {
+    display: none;
+  }
+
+  @media (max-width: 860px) {
+    .main-nav,
+    .header-cta {
+      display: none;
+    }
+
+    .menu-toggle {
+      display: inline-flex;
+      margin-left: auto;
+    }
+
+    .mobile-menu {
+      border-top: 1px solid var(--line);
+      padding: 20px 24px 28px;
+    }
+
+    .mobile-menu.is-open {
+      display: block;
+    }
+
+    .mobile-menu ul {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 18px;
+    }
+
+    .mobile-menu a {
+      display: block;
+      padding: 10px 4px;
+      font-weight: 500;
+      color: var(--ink);
+      border-bottom: 1px solid var(--line);
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      const isOpen = menu.classList.toggle('is-open');
+      menu.hidden = !isOpen;
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      toggle.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+    });
+
+    menu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        menu.classList.remove('is-open');
+        menu.hidden = true;
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Abrir menu');
+      });
+    });
+  }
+</script>

@@ -1,0 +1,57 @@
+---
+import Icon from './Icon.astro';
+
+const testimonials = [
+  { name: '[Nome do cliente]', text: '[Cole aqui a avaliação real do Google.]' },
+  { name: '[Nome do cliente]', text: '[Cole aqui a avaliação real do Google.]' },
+  { name: '[Nome do cliente]', text: '[Cole aqui a avaliação real do Google.]' },
+];
+---
+
+<section class="section" id="depoimentos">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Depoimentos</span>
+      <h2>Quem já consertou o celular com a gente</h2>
+    </div>
+
+    <div class="grid grid-3">
+      {testimonials.map((t) => (
+        <article class="testimonial surface reveal">
+          <div class="stars" aria-label="5 de 5 estrelas">
+            {Array.from({ length: 5 }).map(() => (
+              <Icon name="star" size={16} />
+            ))}
+          </div>
+          <p>&ldquo;{t.text}&rdquo;</p>
+          <span class="author">{t.name}</span>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonial {
+    padding: 28px;
+  }
+
+  .stars {
+    display: flex;
+    gap: 4px;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  .testimonial p {
+    font-size: 0.95rem;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+
+  .author {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink-2);
+  }
+</style>

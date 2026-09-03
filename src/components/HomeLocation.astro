@@ -1,0 +1,92 @@
+---
+import { business, whatsappLink } from '../data/business';
+import Icon from './Icon.astro';
+---
+
+<section class="section" id="localizacao">
+  <div class="container">
+    <div class="location-grid">
+      <div class="location-copy reveal">
+        <span class="eyebrow">Localização</span>
+        <h2>Venha nos visitar na Freguesia do Ó</h2>
+
+        <ul class="info-list">
+          <li>
+            <Icon name="pin" size={20} />
+            <span>{business.addressStreet} — {business.neighborhood}, {business.city} - {business.state}, {business.zip}</span>
+          </li>
+          <li>
+            <Icon name="clock" size={20} />
+            <span>{business.hours}</span>
+          </li>
+          <li>
+            <Icon name="phone" size={20} />
+            <span>{business.phoneDisplay}</span>
+          </li>
+        </ul>
+
+        <a class="btn btn-primary" href={whatsappLink('Olá! Vim pelo site e gostaria de saber como chegar até a loja.')} target="_blank" rel="noopener noreferrer nofollow">
+          <Icon name="whatsapp" size={18} />
+          Chamar no WhatsApp
+        </a>
+      </div>
+
+      <div class="map-frame surface reveal">
+        <iframe
+          src={business.mapsEmbedSrc}
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Localização da Império das Telas no Google Maps"
+          aria-label="Mapa com a localização da Império das Telas"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .location-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 28px 0 32px;
+  }
+
+  .info-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    color: var(--ink-2);
+  }
+
+  .info-list :global(svg) {
+    flex-shrink: 0;
+    color: var(--silver);
+    margin-top: 2px;
+  }
+
+  .map-frame {
+    overflow: hidden;
+    padding: 0;
+    aspect-ratio: 4 / 3;
+  }
+
+  .map-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  @media (max-width: 900px) {
+    .location-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

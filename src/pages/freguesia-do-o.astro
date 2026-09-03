@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import FinalCta from '../components/FinalCta.astro';
+import { neighborhoods, services } from '../data/business';
+
+const neighborhood = neighborhoods.find((n) => n.slug === 'freguesia-do-o')!;
+---
+
+<Layout title={neighborhood.metaTitle} description={neighborhood.metaDescription}>
+  <PageHero
+    eyebrow="Bairro atendido"
+    h1={neighborhood.h1}
+    intro={neighborhood.intro}
+    whatsappMessage={neighborhood.whatsappMessage}
+  />
+
+  <RelatedLinks
+    title="Nossos serviços"
+    items={services.map((s) => ({ href: `/${s.slug}`, label: s.title }))}
+  />
+
+  <RelatedLinks
+    title="Também atendemos"
+    items={neighborhoods.filter((n) => n.slug !== neighborhood.slug).map((n) => ({ href: `/${n.slug}`, label: n.name }))}
+  />
+
+  <FinalCta whatsappMessage={neighborhood.whatsappMessage} />
+</Layout>
