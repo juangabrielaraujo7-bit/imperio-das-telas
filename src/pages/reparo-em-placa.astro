@@ -1,9 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
-import RelatedLinks from '../components/RelatedLinks.astro';
-import FinalCta from '../components/FinalCta.astro';
-import { services } from '../data/business';
+import SelectorCta from '../components/SelectorCta.astro';
+import PageGallery from '../components/PageGallery.astro';
+import StoreShowcase from '../components/StoreShowcase.astro';
+import PageFaq from '../components/PageFaq.astro';
+import PageLinks from '../components/PageLinks.astro';
+import { services, brandOptions } from '../data/business';
 
 const service = services.find((s) => s.slug === 'reparo-em-placa')!;
 ---
@@ -18,10 +21,27 @@ const service = services.find((s) => s.slug === 'reparo-em-placa')!;
     signs={service.signs}
   />
 
-  <RelatedLinks
-    title="Outros serviços"
-    items={services.filter((s) => s.slug !== service.slug).map((s) => ({ href: `/${s.slug}`, label: s.title }))}
+  <SelectorCta
+    heading="Qual a marca do seu aparelho?"
+    helper="Selecione e já chame direto no WhatsApp."
+    options={brandOptions}
+    placeholder="Selecione a marca"
+    messageTemplate="Olá! Meu aparelho é {option} e preciso de um diagnóstico de reparo em placa."
   />
 
-  <FinalCta whatsappMessage={service.whatsappMessage} />
+  <PageGallery
+    text="Diagnóstico técnico com equipamento adequado antes de qualquer orçamento. Só falamos em prazo e valor depois de confirmar a causa real do problema."
+  />
+
+  <StoreShowcase whatsappMessage={service.whatsappMessage} />
+
+  <PageFaq title="Dúvidas sobre reparo em placa" faqs={service.faqs} />
+
+  <PageLinks
+    items={[
+      { href: '/#servicos', label: 'Ver todos os serviços' },
+      { href: '/#marcas', label: 'Marcas atendidas' },
+      { href: '/#localizacao', label: 'Onde fica a loja' },
+    ]}
+  />
 </Layout>

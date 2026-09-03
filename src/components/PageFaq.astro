@@ -1,0 +1,81 @@
+---
+import type { FaqItem } from '../data/business';
+
+interface Props {
+  title: string;
+  faqs: FaqItem[];
+}
+
+const { title, faqs } = Astro.props;
+---
+
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">FAQ</span>
+      <h2>{title}</h2>
+    </div>
+
+    <div class="faq-list">
+      {faqs.map((faq) => (
+        <details class="faq-item reveal">
+          <summary>
+            <span>{faq.q}</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </summary>
+          <p>{faq.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-list {
+    max-width: 760px;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--line);
+    padding: 22px 0;
+  }
+
+  .faq-item summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    list-style: none;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-icon {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    color: var(--ink-2);
+    font-size: 1.1rem;
+    transition: transform var(--transition), border-color var(--transition);
+  }
+
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+    border-color: var(--ink);
+  }
+
+  .faq-item p {
+    margin: 16px 0 0;
+    max-width: 620px;
+  }
+</style>

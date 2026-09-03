@@ -1,0 +1,107 @@
+---
+import { business, whatsappLink } from '../data/business';
+import Icon from './Icon.astro';
+
+interface Props {
+  whatsappMessage: string;
+}
+
+const { whatsappMessage } = Astro.props;
+---
+
+<section class="section">
+  <div class="container">
+    <div class="store-card reveal" data-photo>
+      <img src="/img/loja/loja-1.jpg" alt="Fachada da loja Império das Telas na Freguesia do Ó" loading="lazy" />
+      <span class="store-fallback" data-photo-fallback aria-hidden="true"></span>
+
+      <div class="store-overlay">
+        <span class="eyebrow">Nossa loja física</span>
+        <h2>Loja física na Freguesia do Ó</h2>
+        <p>
+          Ficamos na {business.addressStreet}, {business.neighborhood}, {business.city} - {business.state}, {business.zip}.
+          {' '}Fácil acesso para quem vem de Vila Palmeiras, Limão, Casa Verde, Brasilândia e Cachoeirinha.
+        </p>
+        <a class="btn btn-primary" href={whatsappLink(whatsappMessage)} target="_blank" rel="noopener noreferrer nofollow">
+          <Icon name="whatsapp" size={18} />
+          Chamar no WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .store-card {
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+    min-height: 420px;
+    display: flex;
+    align-items: flex-end;
+    border: 1px solid var(--line);
+  }
+
+  .store-card img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .store-fallback {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background: var(--ink);
+  }
+
+  .store-card.no-media .store-fallback {
+    display: block;
+  }
+
+  .store-card.no-media img {
+    display: none;
+  }
+
+  .store-overlay {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding: 40px;
+    background: linear-gradient(180deg, rgba(18, 18, 20, 0) 0%, rgba(18, 18, 20, 0.85) 60%, rgba(18, 18, 20, 0.95) 100%);
+    color: #fff;
+  }
+
+  .store-overlay .eyebrow {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .store-overlay h2 {
+    color: #fff;
+    margin-bottom: 12px;
+  }
+
+  .store-overlay p {
+    color: rgba(255, 255, 255, 0.78);
+    max-width: 520px;
+    margin-bottom: 24px;
+  }
+</style>
+
+<script>
+  document.querySelectorAll('[data-photo]').forEach((card) => {
+    const img = card.querySelector('img');
+    if (!img) return;
+
+    const markNoMedia = () => card.classList.add('no-media');
+
+    if (img.complete && img.naturalWidth === 0) {
+      markNoMedia();
+      return;
+    }
+
+    img.addEventListener('error', markNoMedia, { once: true });
+  });
+</script>

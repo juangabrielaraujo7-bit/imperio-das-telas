@@ -1,0 +1,110 @@
+---
+interface Props {
+  title?: string;
+  text?: string;
+}
+
+const {
+  title = 'Um pouco do nosso dia a dia',
+  text = 'Aparelho aberto na bancada, peça de qualidade e conferência antes de fechar. É assim que trabalhamos todo reparo que sai daqui.',
+} = Astro.props;
+
+const photos = [
+  { file: 'bancada-1.jpg', alt: 'Técnico reparando celular na bancada da Império das Telas', caption: 'Reparo na bancada' },
+  { file: 'bancada-2.jpg', alt: 'Montagem de precisão em conserto de celular', caption: 'Montagem de precisão' },
+  { file: 'loja-2.jpg', alt: 'Vitrine da loja Império das Telas na Freguesia do Ó', caption: 'Vitrine da loja' },
+];
+---
+
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <h2>{title}</h2>
+      <p>{text}</p>
+    </div>
+
+    <div class="grid grid-3">
+      {photos.map((photo) => (
+        <div class="photo surface reveal" data-photo>
+          <img
+            src={`/img/loja/${photo.file}`}
+            alt={photo.alt}
+            loading="lazy"
+            width="480"
+            height="360"
+          />
+          <span class="photo-fallback" data-photo-fallback>Foto em breve</span>
+          <span class="photo-caption">{photo.caption}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .photo {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .photo-fallback {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    color: var(--silver);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .photo.no-media img {
+    display: none;
+  }
+
+  .photo.no-media .photo-fallback {
+    display: flex;
+  }
+
+  .photo-caption {
+    position: absolute;
+    left: 16px;
+    bottom: 14px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  .photo.no-media .photo-caption {
+    color: var(--ink-2);
+    text-shadow: none;
+  }
+</style>
+
+<script>
+  document.querySelectorAll('[data-photo]').forEach((card) => {
+    const img = card.querySelector('img');
+    if (!img) return;
+
+    const markNoMedia = () => card.classList.add('no-media');
+
+    if (img.complete && img.naturalWidth === 0) {
+      markNoMedia();
+      return;
+    }
+
+    img.addEventListener('error', markNoMedia, { once: true });
+  });
+</script>

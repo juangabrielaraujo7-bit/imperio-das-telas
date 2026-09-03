@@ -32,6 +32,11 @@ export type ServiceKey =
   | 'troca-de-camera'
   | 'reparo-em-placa';
 
+export interface FaqItem {
+  q: string;
+  a: string;
+}
+
 export interface ServiceItem {
   slug: ServiceKey;
   title: string;
@@ -45,7 +50,11 @@ export interface ServiceItem {
   signs: string[];
   whatsappMessage: string;
   icon: string;
+  faqs: FaqItem[];
 }
+
+// Opções do seletor "Qual a marca do seu aparelho?" nas páginas de serviço.
+export const brandOptions = ['iPhone', 'Samsung', 'Motorola', 'Xiaomi / Redmi / POCO', 'Outra marca'];
 
 export const services: ServiceItem[] = [
   {
@@ -69,6 +78,13 @@ export const services: ServiceItem[] = [
     ],
     whatsappMessage: 'Olá! Vim pelo site e gostaria de um orçamento para troca de tela.',
     icon: 'screen',
+    faqs: [
+      { q: 'Quanto tempo leva a troca da tela?', a: 'Na maioria dos modelos, o serviço é feito no mesmo dia. Assim que você chega ou envia o aparelho, avaliamos e já te passamos o prazo exato.' },
+      { q: 'A tela nova tem garantia?', a: 'Sim, toda peça instalada tem garantia. Qualquer problema relacionado ao serviço dentro do prazo é resolvido sem custo.' },
+      { q: 'Trocam tela de qualquer marca e modelo?', a: 'Atendemos iPhone, Samsung, Motorola, Xiaomi e outras marcas. Se tiver dúvida sobre o seu modelo, é só chamar no WhatsApp.' },
+      { q: 'Vou perder meus dados trocando a tela?', a: 'Não. A troca de tela não mexe na memória do aparelho, mas por segurança sempre recomendamos ter um backup atualizado.' },
+      { q: 'Quanto custa?', a: 'O valor varia por modelo e tipo de dano (só vidro ou conjunto completo). Manda o modelo no WhatsApp e te passamos o orçamento na hora.' },
+    ],
   },
   {
     slug: 'troca-de-bateria',
@@ -90,6 +106,13 @@ export const services: ServiceItem[] = [
     ],
     whatsappMessage: 'Olá! Vim pelo site e gostaria de um orçamento para troca de bateria.',
     icon: 'battery',
+    faqs: [
+      { q: 'Quanto tempo leva a troca de bateria?', a: 'Geralmente o serviço é feito no mesmo dia, muitas vezes na hora, enquanto você aguarda.' },
+      { q: 'Bateria estufada é perigosa?', a: 'Sim, pode danificar a tela e outros componentes. Se notar a traseira ou a tela estufando, recomendamos trazer o quanto antes.' },
+      { q: 'A bateria nova tem garantia?', a: 'Sim, toda bateria instalada tem garantia contra defeitos.' },
+      { q: 'Trocam bateria de qualquer marca?', a: 'Sim, atendemos iPhone, Samsung, Motorola, Xiaomi e outras marcas.' },
+      { q: 'Quanto custa trocar a bateria?', a: 'O valor varia por modelo. Manda a marca e o modelo no WhatsApp e já te passamos o orçamento.' },
+    ],
   },
   {
     slug: 'troca-de-conector-de-carga',
@@ -111,6 +134,12 @@ export const services: ServiceItem[] = [
     ],
     whatsappMessage: 'Olá! Vim pelo site e gostaria de um orçamento para troca de conector de carga.',
     icon: 'charging',
+    faqs: [
+      { q: 'Quanto tempo leva o reparo?', a: 'Na maioria dos casos, o mesmo dia. Fazemos o diagnóstico na hora para confirmar se é o conector mesmo.' },
+      { q: 'O conector novo tem garantia?', a: 'Sim, a peça e o serviço têm garantia.' },
+      { q: 'Isso resolve um celular que não carrega de jeito nenhum?', a: 'Na maior parte dos casos sim. Se não for o conector, fazemos o diagnóstico e te avisamos antes de qualquer custo.' },
+      { q: 'Quanto custa a troca do conector?', a: 'O valor varia por modelo. Manda a marca e o modelo no WhatsApp para receber o orçamento.' },
+    ],
   },
   {
     slug: 'troca-de-camera',
@@ -132,6 +161,12 @@ export const services: ServiceItem[] = [
     ],
     whatsappMessage: 'Olá! Vim pelo site e gostaria de um orçamento para troca de câmera.',
     icon: 'camera',
+    faqs: [
+      { q: 'Quanto tempo leva a troca da câmera?', a: 'Geralmente o mesmo dia, dependendo da disponibilidade da peça para o seu modelo.' },
+      { q: 'A câmera nova tem garantia?', a: 'Sim, toda peça instalada tem garantia.' },
+      { q: 'Trocam câmera frontal e traseira?', a: 'Sim, avaliamos e trocamos a câmera frontal, traseira ou o módulo completo, conforme o caso.' },
+      { q: 'Quanto custa?', a: 'Varia por modelo e pela câmera afetada. Manda o modelo no WhatsApp para receber o orçamento.' },
+    ],
   },
   {
     slug: 'reparo-em-placa',
@@ -153,6 +188,12 @@ export const services: ServiceItem[] = [
     ],
     whatsappMessage: 'Olá! Vim pelo site e gostaria de um orçamento para reparo em placa.',
     icon: 'chip',
+    faqs: [
+      { q: 'Quanto tempo leva o diagnóstico?', a: 'O diagnóstico costuma ficar pronto em 1 a 2 dias úteis. Casos mais complexos podem levar um pouco mais — sempre te avisamos o prazo.' },
+      { q: 'Todo reparo em placa tem conserto?', a: 'Nem sempre, depende do dano. Por isso fazemos o diagnóstico técnico antes: só falamos em prazo e valor depois de confirmar que dá para reparar.' },
+      { q: 'O orçamento tem algum custo?', a: 'Não, o diagnóstico e o orçamento são gratuitos e sem compromisso.' },
+      { q: 'Aparelho que caiu na água tem conserto?', a: 'Em muitos casos sim, principalmente se for trazido rápido. Fazemos a avaliação técnica para confirmar.' },
+    ],
   },
 ];
 
@@ -169,9 +210,22 @@ export interface BrandItem {
   metaDescription: string;
   h1: string;
   intro: string;
+  commonRepairsLabel: string;
+  commonRepairs: string[];
   whatsappMessage: string;
   logo: string;
+  faqs: FaqItem[];
 }
+
+// Opções do seletor "Qual o problema do seu aparelho?" nas páginas de marca.
+export const problemOptions = [
+  'Tela quebrada',
+  'Bateria fraca',
+  'Conector de carga solto',
+  'Câmera com problema',
+  'Aparelho não liga',
+  'Outro problema',
+];
 
 export const brands: BrandItem[] = [
   {
@@ -183,8 +237,23 @@ export const brands: BrandItem[] = [
     h1: 'Assistência técnica de iPhone na Freguesia do Ó',
     intro:
       'Consertamos iPhone dos modelos mais antigos aos mais recentes: troca de tela, bateria, conector de carga, câmera e reparos em placa. Peças de qualidade, diagnóstico honesto e garantia no serviço.',
+    commonRepairsLabel: 'Reparos mais comuns em iPhone',
+    commonRepairs: [
+      'Troca de tela trincada, com manchas ou sem toque',
+      'Troca de bateria que descarrega rápido ou está estufada',
+      'Troca de conector de carga que não segura o cabo',
+      'Troca de câmera com foto embaçada ou fora de foco',
+      'Diagnóstico para iPhone que não liga ou reinicia sozinho',
+    ],
     whatsappMessage: 'Olá! Vim pelo site e gostaria de um orçamento para meu iPhone.',
     logo: '/img/marcas/iphone.svg',
+    faqs: [
+      { q: 'Vocês trocam tela de qualquer iPhone?', a: 'Sim, atendemos desde os modelos mais antigos até os mais recentes.' },
+      { q: 'Quanto tempo leva o conserto?', a: 'A maioria dos reparos é feita no mesmo dia. Casos mais complexos, como reparo em placa, podem levar mais tempo.' },
+      { q: 'O reparo tem garantia?', a: 'Sim, todo serviço e peça utilizada têm garantia.' },
+      { q: 'O orçamento tem algum custo?', a: 'Não, o diagnóstico e o orçamento são gratuitos e sem compromisso.' },
+      { q: 'Fazem reparo em placa de iPhone?', a: 'Sim, fazemos diagnóstico técnico para identificar a causa e avaliar se há reparo.' },
+    ],
   },
   {
     slug: 'assistencia-tecnica-samsung',
@@ -195,8 +264,23 @@ export const brands: BrandItem[] = [
     h1: 'Assistência técnica Samsung na Freguesia do Ó',
     intro:
       'Atendemos toda a linha Galaxy — da série A aos top de linha S e Note/Ultra. Troca de tela (incluindo AMOLED), bateria, conector, câmera e reparos mais complexos, com peças de qualidade e garantia.',
+    commonRepairsLabel: 'Reparos mais comuns em Samsung',
+    commonRepairs: [
+      'Troca de tela trincada ou com queima de imagem (AMOLED)',
+      'Troca de bateria que descarrega rápido ou está estufada',
+      'Troca de conector de carga que não segura o cabo',
+      'Troca de câmera com foto embaçada ou fora de foco',
+      'Diagnóstico para Galaxy que não liga ou reinicia sozinho',
+    ],
     whatsappMessage: 'Olá! Vim pelo site e gostaria de um orçamento para meu Samsung.',
     logo: '/img/marcas/samsung.svg',
+    faqs: [
+      { q: 'Vocês trocam tela de qualquer Galaxy?', a: 'Sim, incluindo modelos com tela AMOLED.' },
+      { q: 'Quanto tempo leva o conserto?', a: 'A maioria dos reparos é feita no mesmo dia. Casos mais complexos podem levar mais tempo.' },
+      { q: 'O reparo tem garantia?', a: 'Sim, todo serviço e peça utilizada têm garantia.' },
+      { q: 'O orçamento tem algum custo?', a: 'Não, o diagnóstico e o orçamento são gratuitos e sem compromisso.' },
+      { q: 'Fazem reparo em placa de Samsung?', a: 'Sim, fazemos diagnóstico técnico para identificar a causa e avaliar se há reparo.' },
+    ],
   },
   {
     slug: 'assistencia-tecnica-motorola',
@@ -207,8 +291,23 @@ export const brands: BrandItem[] = [
     h1: 'Assistência técnica Motorola na Freguesia do Ó',
     intro:
       'Consertamos Motorola das linhas Moto G, Moto E, Edge e outras. Troca de tela, bateria, conector de carga, câmera e reparos em placa, com peças de qualidade e garantia no serviço.',
+    commonRepairsLabel: 'Reparos mais comuns em Motorola',
+    commonRepairs: [
+      'Troca de tela trincada, com manchas ou sem toque',
+      'Troca de bateria que descarrega rápido ou está estufada',
+      'Troca de conector de carga que não segura o cabo',
+      'Troca de câmera com foto embaçada ou fora de foco',
+      'Diagnóstico para aparelho que não liga ou reinicia sozinho',
+    ],
     whatsappMessage: 'Olá! Vim pelo site e gostaria de um orçamento para meu Motorola.',
     logo: '/img/marcas/motorola.svg',
+    faqs: [
+      { q: 'Vocês trocam tela de qualquer Motorola?', a: 'Sim, atendemos as linhas Moto G, Moto E, Edge e outras.' },
+      { q: 'Quanto tempo leva o conserto?', a: 'A maioria dos reparos é feita no mesmo dia. Casos mais complexos podem levar mais tempo.' },
+      { q: 'O reparo tem garantia?', a: 'Sim, todo serviço e peça utilizada têm garantia.' },
+      { q: 'O orçamento tem algum custo?', a: 'Não, o diagnóstico e o orçamento são gratuitos e sem compromisso.' },
+      { q: 'Fazem reparo em placa de Motorola?', a: 'Sim, fazemos diagnóstico técnico para identificar a causa e avaliar se há reparo.' },
+    ],
   },
   {
     slug: 'assistencia-tecnica-xiaomi',
@@ -219,8 +318,23 @@ export const brands: BrandItem[] = [
     h1: 'Assistência técnica Xiaomi na Freguesia do Ó',
     intro:
       'Atendemos Xiaomi, Redmi e POCO em troca de tela, bateria, conector, câmera e reparos em placa. Diagnóstico honesto, peças de qualidade e garantia.',
+    commonRepairsLabel: 'Reparos mais comuns em Xiaomi, Redmi e POCO',
+    commonRepairs: [
+      'Troca de tela trincada, com manchas ou sem toque',
+      'Troca de bateria que descarrega rápido ou está estufada',
+      'Troca de conector de carga que não segura o cabo',
+      'Troca de câmera com foto embaçada ou fora de foco',
+      'Diagnóstico para aparelho que não liga ou reinicia sozinho',
+    ],
     whatsappMessage: 'Olá! Vim pelo site e gostaria de um orçamento para meu Xiaomi/Redmi/POCO.',
     logo: '/img/marcas/xiaomi.svg',
+    faqs: [
+      { q: 'Vocês trocam tela de qualquer Xiaomi, Redmi ou POCO?', a: 'Sim, atendemos as principais linhas dessas marcas.' },
+      { q: 'Quanto tempo leva o conserto?', a: 'A maioria dos reparos é feita no mesmo dia. Casos mais complexos podem levar mais tempo.' },
+      { q: 'O reparo tem garantia?', a: 'Sim, todo serviço e peça utilizada têm garantia.' },
+      { q: 'O orçamento tem algum custo?', a: 'Não, o diagnóstico e o orçamento são gratuitos e sem compromisso.' },
+      { q: 'Fazem reparo em placa de Xiaomi?', a: 'Sim, fazemos diagnóstico técnico para identificar a causa e avaliar se há reparo.' },
+    ],
   },
 ];
 
