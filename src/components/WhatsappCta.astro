@@ -6,6 +6,7 @@ interface Props {
   label?: string;
   variant?: 'primary' | 'secondary';
   size?: 'md' | 'sm';
+  pulse?: boolean;
   class?: string;
 }
 
@@ -14,6 +15,7 @@ const {
   label = 'Orçamento no WhatsApp',
   variant = 'primary',
   size = 'md',
+  pulse = false,
   class: className = '',
 } = Astro.props;
 
@@ -21,6 +23,7 @@ const cls = [
   'btn',
   variant === 'primary' ? 'btn-whatsapp' : 'btn-secondary',
   size === 'sm' ? 'btn-sm' : '',
+  pulse ? 'btn-pulse' : '',
   className,
 ]
   .filter(Boolean)

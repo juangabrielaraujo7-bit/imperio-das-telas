@@ -1,0 +1,65 @@
+---
+const items = [
+  'iPhone',
+  'Samsung',
+  'Motorola',
+  'Xiaomi / Redmi / POCO',
+  'Garantia real',
+  'Diagnóstico grátis',
+  'Peças de qualidade',
+  'Orçamento pelo WhatsApp',
+];
+
+const line = items.join('   ·   ');
+---
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-group">{line}&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;</span>
+    <span class="marquee-group">{line}&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;</span>
+  </div>
+</div>
+
+<style>
+  .marquee {
+    overflow: hidden;
+    background: var(--ink);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee-scroll 24s linear infinite;
+  }
+
+  .marquee-group {
+    display: inline-block;
+    padding: 13px 0;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  @keyframes marquee-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
+    }
+
+    .marquee-group:last-child {
+      display: none;
+    }
+  }
+</style>
