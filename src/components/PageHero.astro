@@ -27,7 +27,7 @@ const { eyebrow, h1, intro, whatsappMessage, signsLabel, signs } = Astro.props;
         <ul>
           {signs.map((sign) => (
             <li>
-              <Icon name="check" size={18} />
+              <span class="check-badge"><Icon name="check" size={13} /></span>
               <span>{sign}</span>
             </li>
           ))}
@@ -53,6 +53,7 @@ const { eyebrow, h1, intro, whatsappMessage, signsLabel, signs } = Astro.props;
     margin-top: 48px;
     padding: 32px;
     max-width: 560px;
+    border-left: 3px solid var(--ink);
   }
 
   .signs h2 {
@@ -63,18 +64,26 @@ const { eyebrow, h1, intro, whatsappMessage, signsLabel, signs } = Astro.props;
   .signs ul {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 16px;
   }
 
   .signs li {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
     color: var(--ink-2);
+    font-weight: 500;
   }
 
-  .signs :global(svg) {
+  .check-badge {
     flex-shrink: 0;
-    color: var(--silver);
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 </style>

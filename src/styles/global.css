@@ -5,17 +5,23 @@
 }
 
 :root {
-  --bg: #F8F9FA;
+  --bg: #EEEEF1;
   --surface: #FFFFFF;
-  --ink: #121214;
-  --ink-2: #52525B;
-  --line: #E4E4E7;
-  --silver: #A1A1AA;
+  --ink: #0A0A0C;
+  --ink-2: #38383E;
+  --line: #C7C7CE;
+  --silver: #6B6B73;
+  --silver-soft: #9C9CA5;
+  --whatsapp: #25D366;
+  --whatsapp-dark: #128C5A;
 
   --radius: 16px;
   --radius-sm: 10px;
   --container: 1180px;
   --transition: 200ms ease;
+
+  --shadow-sm: 0 1px 2px rgba(10, 10, 12, 0.05), 0 1px 1px rgba(10, 10, 12, 0.04);
+  --shadow-md: 0 18px 36px rgba(10, 10, 12, 0.1);
 
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
@@ -133,6 +139,7 @@ button {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
 }
 
 /* Botões */
@@ -143,7 +150,7 @@ button {
   gap: 8px;
   padding: 14px 26px;
   border-radius: 999px;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.95rem;
   border: 1px solid transparent;
   cursor: pointer;
@@ -159,7 +166,18 @@ button {
 .btn-primary:hover {
   background: #000;
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(18, 18, 20, 0.25);
+  box-shadow: 0 10px 24px rgba(10, 10, 12, 0.3);
+}
+
+.btn-whatsapp {
+  background: var(--whatsapp);
+  color: #fff;
+}
+
+.btn-whatsapp:hover {
+  background: var(--whatsapp-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(37, 211, 102, 0.35);
 }
 
 .btn-secondary {
@@ -170,6 +188,8 @@ button {
 
 .btn-secondary:hover {
   border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
   transform: translateY(-2px);
 }
 

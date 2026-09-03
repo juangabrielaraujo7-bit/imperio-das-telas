@@ -1,11 +1,16 @@
 ---
 import Icon from './Icon.astro';
+import { business, testimonials } from '../data/business';
 
-const testimonials = [
-  { name: '[Nome do cliente]', text: '[Cole aqui a avaliação real do Google.]' },
-  { name: '[Nome do cliente]', text: '[Cole aqui a avaliação real do Google.]' },
-  { name: '[Nome do cliente]', text: '[Cole aqui a avaliação real do Google.]' },
-];
+function initials(name: string) {
+  return name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join('')
+    .toUpperCase();
+}
 ---
 
 <section class="section" id="depoimentos">
@@ -18,40 +23,112 @@ const testimonials = [
     <div class="grid grid-3">
       {testimonials.map((t) => (
         <article class="testimonial surface reveal">
-          <div class="stars" aria-label="5 de 5 estrelas">
-            {Array.from({ length: 5 }).map(() => (
+          <header class="testimonial-head">
+            <span class="avatar" aria-hidden="true">{initials(t.name)}</span>
+            <div>
+              <span class="author">{t.name}</span>
+              <span class="meta">{t.reviewCount}</span>
+            </div>
+          </header>
+
+          <div class="stars" aria-label={`${t.rating} de 5 estrelas`}>
+            {Array.from({ length: t.rating }).map(() => (
               <Icon name="star" size={16} />
             ))}
           </div>
-          <p>&ldquo;{t.text}&rdquo;</p>
-          <span class="author">{t.name}</span>
+          <span class="time-ago">{t.timeAgo}</span>
+
+          <p>{t.text}</p>
         </article>
       ))}
     </div>
+
+    <a class="reviews-link reveal" href={business.reviewsLink} target="_blank" rel="noopener noreferrer">
+      Ver mais avaliações no Google
+      <Icon name="arrow" size={18} />
+    </a>
   </div>
 </section>
 
 <style>
   .testimonial {
     padding: 28px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .testimonial-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .avatar {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  .testimonial-head div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .author {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .meta {
+    font-size: 0.78rem;
+    color: var(--silver);
   }
 
   .stars {
     display: flex;
-    gap: 4px;
-    color: var(--ink);
+    gap: 3px;
+    color: #f5a623;
+    margin-bottom: 6px;
+  }
+
+  .time-ago {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--silver);
     margin-bottom: 16px;
   }
 
   .testimonial p {
-    font-size: 0.95rem;
-    color: var(--ink);
-    margin-bottom: 20px;
+    font-size: 0.94rem;
+    color: var(--ink-2);
+    margin: 0;
   }
 
-  .author {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--ink-2);
+  .reviews-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 36px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--ink);
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--ink);
+    transition: gap var(--transition), opacity var(--transition);
+  }
+
+  .reviews-link:hover {
+    gap: 12px;
+    opacity: 0.7;
   }
 </style>

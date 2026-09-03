@@ -53,20 +53,25 @@ import Icon from './Icon.astro';
   .card:hover {
     transform: translateY(-4px);
     border-color: var(--ink);
-    box-shadow: 0 16px 32px rgba(18, 18, 20, 0.06);
+    box-shadow: var(--shadow-md);
+  }
+
+  .card:hover .card-icon {
+    background: var(--ink);
+    color: #fff;
   }
 
   .card-icon {
-    width: 48px;
-    height: 48px;
+    width: 52px;
+    height: 52px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 12px;
-    background: var(--bg);
-    border: 1px solid var(--line);
-    color: var(--silver);
+    background: var(--ink);
+    color: #fff;
     margin-bottom: 20px;
+    transition: background var(--transition), color var(--transition);
   }
 
   .card h3 {

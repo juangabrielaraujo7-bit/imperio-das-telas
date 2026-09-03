@@ -22,7 +22,7 @@ const { whatsappMessage } = Astro.props;
           Ficamos na {business.addressStreet}, {business.neighborhood}, {business.city} - {business.state}, {business.zip}.
           {' '}Fácil acesso para quem vem de Vila Palmeiras, Limão, Casa Verde, Brasilândia e Cachoeirinha.
         </p>
-        <a class="btn btn-primary" href={whatsappLink(whatsappMessage)} target="_blank" rel="noopener noreferrer nofollow">
+        <a class="btn btn-whatsapp" href={whatsappLink(whatsappMessage)} target="_blank" rel="noopener noreferrer nofollow">
           <Icon name="whatsapp" size={18} />
           Chamar no WhatsApp
         </a>

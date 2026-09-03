@@ -19,7 +19,40 @@ export const business = {
     latitude: -23.4936,
     longitude: -46.6836,
   },
+  reviewsLink: 'https://www.google.com/search?q=Imp%C3%A9rio+das+Telas+Freguesia+do+%C3%93+avalia%C3%A7%C3%B5es',
 };
+
+export interface Testimonial {
+  name: string;
+  reviewCount: string;
+  timeAgo: string;
+  rating: number;
+  text: string;
+}
+
+export const testimonials: Testimonial[] = [
+  {
+    name: 'Adriana Silva Freitas',
+    reviewCount: '3 avaliações',
+    timeAgo: 'um mês atrás',
+    rating: 5,
+    text: 'Recomendo de olhos fechados, foi uma indicação de uma amiga e amei, troquei o meu celular por um novo e o atendimento é nota 1000. Pessoal super atenciosos, profissionais e são sempre um suporte. Estão de parabéns pelo atendimento.',
+  },
+  {
+    name: 'Tata Moreira',
+    reviewCount: '4 avaliações',
+    timeAgo: 'um mês atrás',
+    rating: 5,
+    text: 'Atendimento impecável! Cada detalhe foi surreal. O carinho, os brindes personalizados, a atenção, a agilidade. Comprem sem medo algum. Eu amei e indico de olhos fechados!',
+  },
+  {
+    name: 'Samara Oliveira',
+    reviewCount: '3 avaliações',
+    timeAgo: '3 meses atrás',
+    rating: 5,
+    text: 'O atendimento é muito bom e o serviço é excelente!! Entreguei um tablet inutilizável e recebi outro novinho em apenas 1 dia de manutenção 💗✨',
+  },
+];
 
 export function whatsappLink(message: string): string {
   return `${business.whatsappBase}?text=${encodeURIComponent(message)}`;

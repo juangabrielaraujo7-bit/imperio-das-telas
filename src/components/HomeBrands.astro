@@ -1,5 +1,6 @@
 ---
 import { brands, whatsappLink } from '../data/business';
+import Icon from './Icon.astro';
 ---
 
 <section class="section" id="marcas">
@@ -12,6 +13,7 @@ import { brands, whatsappLink } from '../data/business';
     <div class="grid grid-4">
       {brands.map((brand) => (
         <a class="brand-card surface reveal" href={`/${brand.slug}`}>
+          <span class="brand-icon"><Icon name="phone" size={20} /></span>
           <span class="brand-name">{brand.name}</span>
           <span class="brand-link">Ver mais →</span>
         </a>
@@ -23,6 +25,7 @@ import { brands, whatsappLink } from '../data/business';
         target="_blank"
         rel="noopener noreferrer nofollow"
       >
+        <span class="brand-icon"><Icon name="other" size={20} /></span>
         <span class="brand-name">Outras marcas</span>
         <span class="brand-link">Falar no WhatsApp →</span>
       </a>
@@ -35,15 +38,34 @@ import { brands, whatsappLink } from '../data/business';
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 32px;
+    gap: 24px;
     padding: 28px;
-    min-height: 140px;
-    transition: transform var(--transition), border-color var(--transition);
+    min-height: 150px;
+    transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
   }
 
   .brand-card:hover {
     transform: translateY(-4px);
     border-color: var(--ink);
+    box-shadow: var(--shadow-md);
+  }
+
+  .brand-card:hover .brand-icon {
+    background: var(--ink);
+    color: #fff;
+  }
+
+  .brand-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    color: var(--silver);
+    transition: background var(--transition), color var(--transition);
   }
 
   .brand-name {
