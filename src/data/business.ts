@@ -279,7 +279,7 @@ export const brands: BrandItem[] = [
       'Diagnóstico para iPhone que não liga ou reinicia sozinho',
     ],
     whatsappMessage: 'Olá! Vim pelo site e gostaria de um orçamento para meu iPhone.',
-    logo: '/img/marcas/iphone.svg',
+    logo: '/img/marcas/iphone.png',
     faqs: [
       { q: 'Vocês trocam tela de qualquer iPhone?', a: 'Sim, atendemos desde os modelos mais antigos até os mais recentes.' },
       { q: 'Quanto tempo leva o conserto?', a: 'A maioria dos reparos é feita no mesmo dia. Casos mais complexos, como reparo em placa, podem levar mais tempo.' },
@@ -306,7 +306,7 @@ export const brands: BrandItem[] = [
       'Diagnóstico para Galaxy que não liga ou reinicia sozinho',
     ],
     whatsappMessage: 'Olá! Vim pelo site e gostaria de um orçamento para meu Samsung.',
-    logo: '/img/marcas/samsung.svg',
+    logo: '/img/marcas/samsung.png',
     faqs: [
       { q: 'Vocês trocam tela de qualquer Galaxy?', a: 'Sim, incluindo modelos com tela AMOLED.' },
       { q: 'Quanto tempo leva o conserto?', a: 'A maioria dos reparos é feita no mesmo dia. Casos mais complexos podem levar mais tempo.' },
@@ -333,7 +333,7 @@ export const brands: BrandItem[] = [
       'Diagnóstico para aparelho que não liga ou reinicia sozinho',
     ],
     whatsappMessage: 'Olá! Vim pelo site e gostaria de um orçamento para meu Motorola.',
-    logo: '/img/marcas/motorola.svg',
+    logo: '/img/marcas/motorola.png',
     faqs: [
       { q: 'Vocês trocam tela de qualquer Motorola?', a: 'Sim, atendemos as linhas Moto G, Moto E, Edge e outras.' },
       { q: 'Quanto tempo leva o conserto?', a: 'A maioria dos reparos é feita no mesmo dia. Casos mais complexos podem levar mais tempo.' },
@@ -360,7 +360,7 @@ export const brands: BrandItem[] = [
       'Diagnóstico para aparelho que não liga ou reinicia sozinho',
     ],
     whatsappMessage: 'Olá! Vim pelo site e gostaria de um orçamento para meu Xiaomi/Redmi/POCO.',
-    logo: '/img/marcas/xiaomi.svg',
+    logo: '/img/marcas/xiaomi.png',
     faqs: [
       { q: 'Vocês trocam tela de qualquer Xiaomi, Redmi ou POCO?', a: 'Sim, atendemos as principais linhas dessas marcas.' },
       { q: 'Quanto tempo leva o conserto?', a: 'A maioria dos reparos é feita no mesmo dia. Casos mais complexos podem levar mais tempo.' },

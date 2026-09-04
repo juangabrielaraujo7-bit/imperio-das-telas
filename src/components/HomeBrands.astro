@@ -12,8 +12,26 @@ import Icon from './Icon.astro';
 
     <div class="grid grid-4">
       {brands.map((brand, i) => (
-        <a class="brand-card surface reveal reveal-scale" style={`--reveal-delay: ${i * 70}ms`} href={`/${brand.slug}`}>
-          <span class="brand-icon"><Icon name="phone" size={20} /></span>
+        <a
+          class="brand-card surface reveal reveal-scale"
+          style={`--reveal-delay: ${i * 70}ms`}
+          href={`/${brand.slug}`}
+          data-photo
+        >
+          <div class="brand-photo">
+            <span class="brand-glow" aria-hidden="true"></span>
+            <img
+              src={brand.logo}
+              alt={`Aparelhos ${brand.name} para conserto`}
+              loading="lazy"
+              width="320"
+              height="200"
+              style={`animation-delay: ${i * 300}ms`}
+            />
+            <span class="brand-icon-fallback" data-photo-fallback aria-hidden="true">
+              <Icon name="phone" size={22} />
+            </span>
+          </div>
           <span class="brand-name">{brand.name}</span>
           <span class="brand-link">Ver mais</span>
         </a>
@@ -26,7 +44,11 @@ import Icon from './Icon.astro';
         target="_blank"
         rel="noopener noreferrer nofollow"
       >
-        <span class="brand-icon"><Icon name="other" size={20} /></span>
+        <div class="brand-photo">
+          <span class="brand-icon-fallback is-static" aria-hidden="true">
+            <Icon name="other" size={22} />
+          </span>
+        </div>
         <span class="brand-name">Outras marcas</span>
         <span class="brand-link">Falar no WhatsApp</span>
       </a>
@@ -38,10 +60,10 @@ import Icon from './Icon.astro';
   .brand-card {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: 24px;
-    padding: 28px;
-    min-height: 150px;
+    align-items: center;
+    text-align: center;
+    gap: 6px;
+    padding: 20px 20px 26px;
     transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1), border-color var(--transition), box-shadow var(--transition);
   }
 
@@ -51,23 +73,85 @@ import Icon from './Icon.astro';
     box-shadow: var(--shadow-md);
   }
 
-  .brand-card:hover .brand-icon {
-    background: var(--whatsapp);
-    color: #fff;
-    transform: rotate(-10deg) scale(1.15);
-  }
-
-  .brand-icon {
-    width: 40px;
-    height: 40px;
+  .brand-photo {
+    position: relative;
+    width: 100%;
+    height: 108px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+
+  .brand-glow {
+    position: absolute;
+    width: 80%;
+    height: 46px;
+    left: 50%;
+    bottom: 6px;
+    translate: -50% 0;
+    background: radial-gradient(ellipse at center, rgba(10, 10, 12, 0.16) 0%, rgba(10, 10, 12, 0) 72%);
+    filter: blur(2px);
+    pointer-events: none;
+  }
+
+  .brand-photo img {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 16px 14px rgba(10, 10, 12, 0.16));
+    animation: brand-float 3.6s ease-in-out infinite;
+  }
+
+  @keyframes brand-float {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 -9px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brand-photo img {
+      animation: none;
+    }
+  }
+
+  .brand-icon-fallback {
+    display: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
     background: var(--bg);
     border: 1px solid var(--line);
     color: var(--silver);
+    align-items: center;
+    justify-content: center;
     transition: background var(--transition), color var(--transition), transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .brand-icon-fallback.is-static {
+    display: flex;
+  }
+
+  .brand-card.no-media .brand-photo img,
+  .brand-card.no-media .brand-glow {
+    display: none;
+  }
+
+  .brand-card.no-media .brand-icon-fallback {
+    display: flex;
+  }
+
+  .brand-card:hover .brand-icon-fallback {
+    background: var(--whatsapp);
+    color: #fff;
+    transform: rotate(-10deg) scale(1.15);
   }
 
   .brand-name {
@@ -81,3 +165,19 @@ import Icon from './Icon.astro';
     font-weight: 600;
   }
 </style>
+
+<script>
+  document.querySelectorAll('[data-photo]').forEach((card) => {
+    const img = card.querySelector('img');
+    if (!img) return;
+
+    const markNoMedia = () => card.classList.add('no-media');
+
+    if (img.complete && img.naturalWidth === 0) {
+      markNoMedia();
+      return;
+    }
+
+    img.addEventListener('error', markNoMedia, { once: true });
+  });
+</script>

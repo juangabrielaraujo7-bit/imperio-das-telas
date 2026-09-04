@@ -1,8 +1,14 @@
-# Logos das marcas (opcional)
+# Fotos das marcas
 
-Pasta reservada para logos/imagens das marcas (iPhone, Samsung, Motorola, Xiaomi), caso você queira adicionar depois.
+Usadas na seção "Marcas atendidas" da Home (com fundo transparente e efeito de flutuação):
 
-Hoje a seção "Marcas atendidas" da Home usa só texto (sem logo), para não depender de arquivo de imagem. Se quiser adicionar os logos:
+```
+iphone.png
+samsung.png
+motorola.png
+xiaomi.png
+```
 
-1. Coloque os arquivos aqui, ex.: `iphone.svg`, `samsung.svg`, `motorola.svg`, `xiaomi.svg`.
-2. Edite `src/components/HomeBrands.astro` para exibir `<img src={brand.logo} ... />` (o campo `logo` já existe em `src/data/business.ts`).
+Se quiser trocar por outra foto, mantenha o fundo transparente (removido) e o mesmo nome de arquivo.
+
+Ainda falta uma foto para o card "Outras marcas" (hoje usa só um ícone) — a que foi enviada para esse card veio sem nenhum conteúdo visível (o fundo foi todo removido, inclusive o celular). Pode reenviar uma nova, com o nome `outras.png`, que eu já ligo no card.
