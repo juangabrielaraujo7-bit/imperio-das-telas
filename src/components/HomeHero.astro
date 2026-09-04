@@ -118,21 +118,21 @@ import WhatsappCta from './WhatsappCta.astro';
     width: 100%;
     height: 100%;
     transform-style: preserve-3d;
-    animation: phone-flip 5.5s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+    animation: phone-flip 6s cubic-bezier(0.45, 0, 0.2, 1) infinite;
   }
 
-  /* Longer hold on "broken" so it's clearly visible before the first flip,
-     then a slow, deliberate turn (suspense) into the "fixed" state. */
+  /* Hold on "broken" so it's clearly visible before the first flip,
+     then a quick 1.5s turn into the "fixed" state. */
   @keyframes phone-flip {
     0%,
-    52% {
+    40% {
       transform: rotateY(0deg);
     }
-    68% {
+    65% {
       transform: rotateY(180deg);
-      animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
+      animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
     }
-    92% {
+    90% {
       transform: rotateY(180deg);
     }
     100% {
