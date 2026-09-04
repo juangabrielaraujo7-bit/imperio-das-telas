@@ -1,6 +1,11 @@
 ---
-import { nav } from '../data/business';
+import { nav, services, brands } from '../data/business';
 import WhatsappCta from './WhatsappCta.astro';
+
+const dropdowns: Record<string, { href: string; label: string }[]> = {
+  'Serviços': services.map((s) => ({ href: `/${s.slug}`, label: s.title })),
+  'Marcas': brands.map((b) => ({ href: `/${b.slug}`, label: b.name })),
+};
 ---
 
 <header class="site-header" id="site-header">
@@ -12,9 +17,21 @@ import WhatsappCta from './WhatsappCta.astro';
 
     <nav class="main-nav" aria-label="Navegação principal">
       <ul>
-        {nav.map((item) => (
-          <li><a href={item.href}>{item.label}</a></li>
-        ))}
+        {nav.map((item) => {
+          const sub = dropdowns[item.label];
+          return sub ? (
+            <li class="has-dropdown">
+              <a href={item.href}>{item.label}</a>
+              <ul class="dropdown">
+                {sub.map((entry) => (
+                  <li><a href={entry.href}>{entry.label}</a></li>
+                ))}
+              </ul>
+            </li>
+          ) : (
+            <li><a href={item.href}>{item.label}</a></li>
+          );
+        })}
       </ul>
     </nav>
 
@@ -109,7 +126,7 @@ import WhatsappCta from './WhatsappCta.astro';
     justify-content: center;
   }
 
-  .main-nav ul {
+  .main-nav > ul {
     display: flex;
     gap: 28px;
   }
@@ -123,6 +140,50 @@ import WhatsappCta from './WhatsappCta.astro';
 
   .main-nav a:hover {
     color: var(--ink);
+  }
+
+  .has-dropdown {
+    position: relative;
+    padding-bottom: 14px;
+    margin-bottom: -14px;
+  }
+
+  .dropdown {
+    position: absolute;
+    top: calc(100% + 2px);
+    left: 50%;
+    min-width: 220px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-md);
+    opacity: 0;
+    visibility: hidden;
+    translate: -50% -6px;
+    transition: opacity var(--transition), translate var(--transition), visibility var(--transition);
+  }
+
+  .has-dropdown:hover .dropdown,
+  .has-dropdown:focus-within .dropdown {
+    opacity: 1;
+    visibility: visible;
+    translate: -50% 0;
+  }
+
+  .dropdown a {
+    display: block;
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    white-space: nowrap;
+  }
+
+  .dropdown a:hover {
+    background: var(--bg);
   }
 
   .header-cta {
