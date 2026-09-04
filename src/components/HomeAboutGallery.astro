@@ -45,6 +45,13 @@ const videos = [
           >
             <source src={`/videos/${video.file}`} type="video/mp4" />
           </video>
+          {!video.hasAudio && (
+            <button class="video-play" type="button" aria-label="Reproduzir vídeo" data-play-btn>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </button>
+          )}
           <span class="media-fallback" data-media-fallback>Vídeo em breve</span>
         </div>
       ))}
@@ -107,6 +114,40 @@ const videos = [
     display: flex;
   }
 
+  .video-play {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(10, 10, 12, 0.55);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    transition: opacity var(--transition), background var(--transition), transform var(--transition);
+  }
+
+  .video-play:hover {
+    background: rgba(10, 10, 12, 0.75);
+    transform: scale(1.06);
+  }
+
+  .media.is-playing .video-play {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .media.no-media .video-play {
+    display: none;
+  }
+
   @media (max-width: 480px) {
     .grid-2.gallery {
       grid-template-columns: 1fr;
@@ -133,6 +174,17 @@ const videos = [
         const gaveUp = media.networkState === HTMLMediaElement.NETWORK_NO_SOURCE;
         if (media.error || (stillNothing && gaveUp)) markNoMedia();
       }, 5000);
+
+      // Autoplay can silently fail on some phones/browsers. Without a manual
+      // play button the video would look permanently frozen on the poster.
+      const playBtn = card.querySelector<HTMLButtonElement>('[data-play-btn]');
+      if (playBtn) {
+        playBtn.addEventListener('click', () => {
+          media.play().catch(() => {});
+        });
+        media.addEventListener('play', () => card.classList.add('is-playing'));
+        media.addEventListener('pause', () => card.classList.remove('is-playing'));
+      }
     } else {
       if (media.complete && media.naturalWidth === 0) {
         markNoMedia();
