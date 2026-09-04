@@ -40,12 +40,16 @@ const steps = [
       {steps.map((step, i) => (
         <div class="step reveal" style={`--reveal-delay: ${i * 100}ms`}>
           <span class="step-icon"><Icon name={step.icon} size={20} /></span>
+          {i < steps.length - 1 && (
+            <span class="step-arrow" aria-hidden="true">
+              <Icon name="arrow" size={16} />
+            </span>
+          )}
           <span class="step-n">{step.n}</span>
           <div class="step-body">
             <h3>{step.title}</h3>
             <p>{step.text}</p>
           </div>
-          {i < steps.length - 1 && <span class="step-line" aria-hidden="true"></span>}
         </div>
       ))}
     </div>
@@ -80,6 +84,20 @@ const steps = [
     margin-bottom: 18px;
   }
 
+  .step-arrow {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--silver);
+    z-index: 1;
+  }
+
   .step-n {
     display: block;
     font-size: 0.85rem;
@@ -98,30 +116,29 @@ const steps = [
     font-size: 0.9rem;
   }
 
-  .step-line {
-    display: none;
-  }
-
   @media (min-width: 861px) {
-    .step:not(:last-child) {
-      border-right: 1px solid var(--line);
+    .step-arrow {
+      top: 24px;
+      right: 0;
+      translate: 50% -50%;
     }
   }
 
   @media (max-width: 860px) {
     .steps {
       grid-template-columns: 1fr;
-      gap: 28px;
+      gap: 40px;
     }
 
     .step {
-      padding: 0 0 24px;
-      border-bottom: 1px solid var(--line);
+      padding: 0;
     }
 
-    .step:last-child {
-      border-bottom: none;
-      padding-bottom: 0;
+    .step-arrow {
+      left: 24px;
+      bottom: -33px;
+      translate: -50% 0;
+      rotate: 90deg;
     }
   }
 </style>
