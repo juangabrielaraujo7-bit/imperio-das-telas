@@ -9,11 +9,11 @@ const {
   text = 'Aparelho aberto na bancada, peça de qualidade e conferência antes de fechar. É assim que trabalhamos todo reparo que sai daqui.',
 } = Astro.props;
 
-const photos = [
-  { file: 'bancada-1.jpg', alt: 'Técnico reparando celular na bancada da Império das Telas', caption: 'Reparo na bancada' },
-  { file: 'bancada-2.jpg', alt: 'Montagem de precisão em conserto de celular', caption: 'Montagem de precisão' },
-  { file: 'loja-2.jpg', alt: 'Vitrine da loja Império das Telas na Freguesia do Ó', caption: 'Vitrine da loja' },
-];
+const items = [
+  { type: 'photo', file: '/img/loja/loja-interior.jpg', alt: 'Interior da loja Império das Telas na Freguesia do Ó', caption: 'Nossa loja' },
+  { type: 'video', file: '/videos/bancada-servico.mp4', poster: '/img/videos/bancada-servico.jpg', alt: 'Técnico reparando celular na bancada da Império das Telas', caption: 'Reparo na bancada' },
+  { type: 'photo', file: '/img/loja/loja-fachada-dia.jpg', alt: 'Fachada da loja Império das Telas na Freguesia do Ó', caption: 'Fachada da loja' },
+] as const;
 ---
 
 <section class="section">
@@ -24,17 +24,25 @@ const photos = [
     </div>
 
     <div class="grid grid-3">
-      {photos.map((photo, i) => (
-        <div class="photo surface reveal reveal-scale" style={`--reveal-delay: ${i * 90}ms`} data-photo>
-          <img
-            src={`/img/loja/${photo.file}`}
-            alt={photo.alt}
-            loading="lazy"
-            width="480"
-            height="360"
-          />
-          <span class="photo-fallback" data-photo-fallback>Foto em breve</span>
-          <span class="photo-caption">{photo.caption}</span>
+      {items.map((item, i) => (
+        <div class="photo surface reveal reveal-scale" style={`--reveal-delay: ${i * 90}ms`} data-photo data-video-card={item.type === 'video' ? true : undefined}>
+          {item.type === 'video' ? (
+            <video
+              class="media-content"
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              poster={item.poster}
+              data-src={item.file}
+            >
+              <source src={item.file} type="video/mp4" />
+            </video>
+          ) : (
+            <img class="media-content" src={item.file} alt={item.alt} loading="lazy" width="480" height="360" />
+          )}
+          <span class="photo-fallback" data-photo-fallback>{item.type === 'video' ? 'Vídeo em breve' : 'Foto em breve'}</span>
+          <span class="photo-caption">{item.caption}</span>
         </div>
       ))}
     </div>
@@ -49,14 +57,14 @@ const photos = [
     padding: 0;
   }
 
-  .photo img {
+  .media-content {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 500ms ease;
   }
 
-  .photo:hover img {
+  .photo:hover .media-content {
     transform: scale(1.06);
   }
 
@@ -74,7 +82,7 @@ const photos = [
     letter-spacing: 0.04em;
   }
 
-  .photo.no-media img {
+  .photo.no-media .media-content {
     display: none;
   }
 
@@ -99,17 +107,47 @@ const photos = [
 </style>
 
 <script>
-  document.querySelectorAll('[data-photo]').forEach((card) => {
-    const img = card.querySelector('img');
-    if (!img) return;
+  document.querySelectorAll<HTMLElement>('[data-photo]').forEach((card) => {
+    const media = card.querySelector<HTMLImageElement | HTMLVideoElement>('.media-content');
+    if (!media) return;
 
     const markNoMedia = () => card.classList.add('no-media');
 
-    if (img.complete && img.naturalWidth === 0) {
-      markNoMedia();
-      return;
+    if (media instanceof HTMLVideoElement) {
+      // preload="metadata" starts fetching immediately, so the error may
+      // already have fired before this script runs — check current state first.
+      if (media.error || media.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) {
+        markNoMedia();
+        return;
+      }
+      media.addEventListener('error', markNoMedia, { once: true });
+      media.addEventListener('loadedmetadata', () => {
+        if (media.duration === 0 || Number.isNaN(media.duration)) markNoMedia();
+      });
+    } else {
+      if (media.complete && media.naturalWidth === 0) {
+        markNoMedia();
+        return;
+      }
+      media.addEventListener('error', markNoMedia, { once: true });
     }
-
-    img.addEventListener('error', markNoMedia, { once: true });
   });
+
+  if ('IntersectionObserver' in window) {
+    const playObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const video = entry.target as HTMLVideoElement;
+          if (entry.isIntersecting) {
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    document.querySelectorAll<HTMLVideoElement>('[data-video-card] video').forEach((v) => playObserver.observe(v));
+  }
 </script>
