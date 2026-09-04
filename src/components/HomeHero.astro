@@ -4,8 +4,37 @@ import WhatsappCta from './WhatsappCta.astro';
 
 <section class="hero">
   <div class="container hero-inner">
-    <div class="hero-copy reveal reveal-left">
-      <h1>Tela trincada, bateria fraca ou celular que não liga? A gente resolve.</h1>
+    <h1 class="hero-title reveal reveal-left">Tela trincada, bateria fraca ou celular que não liga? A gente resolve.</h1>
+
+    <div class="hero-device reveal reveal-right" style="--reveal-delay: 120ms" aria-hidden="true">
+      <div class="flip-stage">
+        <div class="flip-card">
+          <div class="flip-face flip-front">
+            <div class="device-frame">
+              <div class="device-notch"></div>
+              <div class="device-screen is-broken">
+                <svg class="crack" viewBox="0 0 100 180" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M50 0 L46 38 L60 52 L44 70 L58 90 L38 108 L52 130 L40 150 L50 180" />
+                  <path d="M46 38 L20 30 M46 38 L14 55 M60 52 L86 44 M60 52 L90 66 M44 70 L18 78 M58 90 L82 100 M38 108 L12 120 M52 130 L78 140 M40 150 L16 162" />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="flip-face flip-back">
+            <div class="device-frame">
+              <div class="device-notch"></div>
+              <div class="device-screen">
+                <div class="screen-line"></div>
+                <div class="screen-line short"></div>
+                <div class="screen-chip"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-copy reveal reveal-left" style="--reveal-delay: 80ms">
       <p class="lead">
         Atendemos Freguesia do Ó, Vila Palmeiras, Limão, Casa Verde, Brasilândia e Cachoeirinha.
       </p>
@@ -17,17 +46,6 @@ import WhatsappCta from './WhatsappCta.astro';
       <div class="hero-proof">
         <strong>+[NÚMERO]</strong>
         <span>aparelhos reparados na região</span>
-      </div>
-    </div>
-
-    <div class="hero-device reveal reveal-right" style="--reveal-delay: 120ms" aria-hidden="true">
-      <div class="device-frame">
-        <div class="device-notch"></div>
-        <div class="device-screen">
-          <div class="screen-line"></div>
-          <div class="screen-line short"></div>
-          <div class="screen-chip"></div>
-        </div>
       </div>
     </div>
   </div>
@@ -42,8 +60,22 @@ import WhatsappCta from './WhatsappCta.astro';
   .hero-inner {
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
+    grid-template-areas:
+      'title device'
+      'copy device';
     align-items: center;
-    gap: 48px;
+    column-gap: 48px;
+    row-gap: 8px;
+  }
+
+  .hero-title {
+    grid-area: title;
+    align-self: end;
+  }
+
+  .hero-copy {
+    grid-area: copy;
+    align-self: start;
   }
 
   .hero-copy .lead {
@@ -76,13 +108,61 @@ import WhatsappCta from './WhatsappCta.astro';
   }
 
   .hero-device {
+    grid-area: device;
     display: flex;
     justify-content: center;
   }
 
-  .device-frame {
+  .flip-stage {
+    perspective: 1500px;
     width: 260px;
     height: 520px;
+  }
+
+  .flip-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    animation: phone-flip 7s cubic-bezier(0.65, 0.05, 0.36, 1) infinite;
+  }
+
+  @keyframes phone-flip {
+    0%,
+    40% {
+      transform: rotateY(0deg);
+    }
+    50% {
+      transform: rotateY(180deg);
+    }
+    90% {
+      transform: rotateY(180deg);
+    }
+    100% {
+      transform: rotateY(360deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .flip-card {
+      animation: none;
+    }
+  }
+
+  .flip-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .flip-back {
+    transform: rotateY(180deg);
+  }
+
+  .device-frame {
+    width: 100%;
+    height: 100%;
     border-radius: 42px;
     background: var(--surface);
     border: 1px solid var(--line);
@@ -105,6 +185,8 @@ import WhatsappCta from './WhatsappCta.astro';
     background: var(--bg);
     border: 1px solid var(--line);
     padding: 24px 18px;
+    position: relative;
+    overflow: hidden;
   }
 
   .screen-line {
@@ -127,16 +209,37 @@ import WhatsappCta from './WhatsappCta.astro';
     background: var(--ink);
   }
 
+  .device-screen.is-broken {
+    background: #1c1c1f;
+  }
+
+  .crack {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.55);
+    stroke-width: 0.8;
+    stroke-linecap: round;
+  }
+
   @media (max-width: 900px) {
     .hero-inner {
       grid-template-columns: 1fr;
+      grid-template-areas:
+        'title'
+        'device'
+        'copy';
+      row-gap: 28px;
     }
 
-    .hero-device {
-      order: -1;
+    .hero-title,
+    .hero-copy {
+      align-self: auto;
     }
 
-    .device-frame {
+    .flip-stage {
       width: 200px;
       height: 400px;
     }
