@@ -1,6 +1,6 @@
 # Fotos da loja
 
-Usadas na seção "Sobre a loja" da Home:
+Usadas na seção "Localização" da Home:
 
 ```
 loja-interior.jpg

@@ -1,6 +1,12 @@
 ---
 import { business, whatsappLink } from '../data/business';
 import Icon from './Icon.astro';
+
+const photos = [
+  { file: 'loja-interior.jpg', alt: 'Interior da loja Império das Telas na Freguesia do Ó' },
+  { file: 'loja-fachada-dia.jpg', alt: 'Fachada da loja Império das Telas durante o dia' },
+  { file: 'loja-fachada-noite.jpg', alt: 'Fachada da loja Império das Telas à noite' },
+];
 ---
 
 <section class="section" id="localizacao">
@@ -40,6 +46,15 @@ import Icon from './Icon.astro';
           aria-label="Mapa com a localização da Império das Telas"
         ></iframe>
       </div>
+    </div>
+
+    <div class="location-photos">
+      {photos.map((photo, i) => (
+        <div class="location-photo surface reveal reveal-scale" style={`--reveal-delay: ${i * 90}ms`} data-photo>
+          <img src={`/img/loja/${photo.file}`} alt={photo.alt} loading="lazy" width="480" height="360" />
+          <span class="photo-fallback" data-photo-fallback>Foto em breve</span>
+        </div>
+      ))}
     </div>
   </div>
 </section>
@@ -84,9 +99,78 @@ import Icon from './Icon.astro';
     border: 0;
   }
 
+  .location-photos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 40px;
+  }
+
+  .location-photo {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .location-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 500ms ease;
+  }
+
+  .location-photo:hover img {
+    transform: scale(1.06);
+  }
+
+  .photo-fallback {
+    position: absolute;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    color: var(--silver);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .location-photo.no-media img {
+    display: none;
+  }
+
+  .location-photo.no-media .photo-fallback {
+    display: flex;
+  }
+
   @media (max-width: 900px) {
     .location-grid {
       grid-template-columns: 1fr;
     }
   }
+
+  @media (max-width: 620px) {
+    .location-photos {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-photo]').forEach((card) => {
+    const img = card.querySelector('img');
+    if (!img) return;
+
+    const markNoMedia = () => card.classList.add('no-media');
+
+    if (img.complete && img.naturalWidth === 0) {
+      markNoMedia();
+      return;
+    }
+
+    img.addEventListener('error', markNoMedia, { once: true });
+  });
+</script>

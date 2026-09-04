@@ -14,11 +14,6 @@ const videos = [
   },
 ];
 
-const photos = [
-  { file: 'loja-interior.jpg', alt: 'Interior da loja Império das Telas na Freguesia do Ó' },
-  { file: 'loja-fachada-dia.jpg', alt: 'Fachada da loja Império das Telas durante o dia' },
-  { file: 'loja-fachada-noite.jpg', alt: 'Fachada da loja Império das Telas à noite' },
-];
 ---
 
 <section class="section" id="sobre">
@@ -51,22 +46,6 @@ const photos = [
             <source src={`/videos/${video.file}`} type="video/mp4" />
           </video>
           <span class="media-fallback" data-media-fallback>Vídeo em breve</span>
-        </div>
-      ))}
-    </div>
-
-    <div class="grid grid-3 gallery">
-      {photos.map((photo, i) => (
-        <div class="media surface reveal reveal-scale" style={`--reveal-delay: ${i * 90}ms`} data-media>
-          <img
-            class="media-content"
-            src={`/img/loja/${photo.file}`}
-            alt={photo.alt}
-            loading="lazy"
-            width="480"
-            height="360"
-          />
-          <span class="media-fallback" data-media-fallback>Foto em breve</span>
         </div>
       ))}
     </div>
@@ -126,12 +105,6 @@ const photos = [
 
   .media.no-media .media-fallback {
     display: flex;
-  }
-
-  @media (max-width: 620px) {
-    .grid-3.gallery {
-      grid-template-columns: repeat(2, 1fr);
-    }
   }
 
   @media (max-width: 480px) {
