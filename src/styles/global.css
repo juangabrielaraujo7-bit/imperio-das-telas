@@ -1,8 +1,6 @@
-@font-face {
-  font-family: 'Inter';
-  src: local('Inter');
-  font-display: swap;
-}
+/* Inter is loaded from Google Fonts via <link> in Layout.astro (with
+   preconnect), which loads faster than a CSS @import — it lets the browser
+   fetch the font in parallel with the stylesheet instead of blocking on it. */
 
 :root {
   --bg: #F8F9FA;
@@ -51,14 +49,19 @@ html {
   }
 }
 
+html,
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
 }
 
 img,
@@ -81,6 +84,7 @@ h3 { font-size: 1.25rem; }
 
 p {
   margin: 0 0 1em;
+  font-weight: 400;
   color: var(--ink-2);
 }
 
