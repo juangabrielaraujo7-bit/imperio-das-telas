@@ -100,7 +100,7 @@ export const services: ServiceItem[] = [
       'Trocamos a tela do seu celular no mesmo dia, com peças de qualidade e garantia. iPhone, Samsung, Motorola, Xiaomi e mais. Orçamento grátis pelo WhatsApp.',
     h1: 'Troca de tela de celular com garantia na Freguesia do Ó',
     intro:
-      'Tela trincada, com manchas, listras ou sem toque? Na Império das Telas fazemos a troca com peças de qualidade e garantia, na maioria dos casos no mesmo dia. Fazemos troca só do vidro ou do conjunto completo, dependendo do modelo e do dano — e você recebe o orçamento exato antes de aprovar qualquer coisa.',
+      'Tela trincada, com manchas, listras ou sem toque? Na Império das Telas fazemos a troca com peças de qualidade e garantia, na maioria dos casos no mesmo dia. Fazemos troca só do vidro ou do conjunto completo, dependendo do modelo e do dano, e você recebe o orçamento exato antes de aprovar qualquer coisa.',
     signsLabel: 'Sinais de que você precisa trocar a tela',
     signs: [
       'Vidro trincado',
@@ -129,7 +129,7 @@ export const services: ServiceItem[] = [
       'Bateria viciada ou descarregando rápido? Trocamos a bateria do seu celular com peça de qualidade e garantia. Orçamento grátis pelo WhatsApp.',
     h1: 'Troca de bateria de celular na Freguesia do Ó',
     intro:
-      'Se o celular descarrega rápido, desliga sozinho com carga ainda disponível ou está estufado, é hora de trocar a bateria. Usamos peças de qualidade e devolvemos a autonomia do seu aparelho com garantia — geralmente no mesmo dia.',
+      'Se o celular descarrega rápido, desliga sozinho com carga ainda disponível ou está estufado, é hora de trocar a bateria. Usamos peças de qualidade e devolvemos a autonomia do seu aparelho com garantia, geralmente no mesmo dia.',
     signsLabel: 'Sinais de que você precisa trocar a bateria',
     signs: [
       'Dura muito menos que antes',
@@ -211,7 +211,7 @@ export const services: ServiceItem[] = [
       'Celular que não liga, molhou ou tem defeito complexo? Fazemos reparo em placa com diagnóstico técnico. Fale conosco pelo WhatsApp.',
     h1: 'Reparo em placa de celular na Freguesia do Ó',
     intro:
-      'Aparelho que não liga, não carrega, esquenta demais ou molhou? Esses casos pedem análise a nível de placa. Fazemos o diagnóstico técnico para identificar a causa real e só então informamos prazo e orçamento — sem compromisso.',
+      'Aparelho que não liga, não carrega, esquenta demais ou molhou? Esses casos pedem análise a nível de placa. Fazemos o diagnóstico técnico para identificar a causa real e só então informamos prazo e orçamento, sem compromisso.',
     signsLabel: 'Sinais de que seu aparelho precisa de reparo em placa',
     signs: [
       'Não liga nem carregando',
@@ -222,7 +222,7 @@ export const services: ServiceItem[] = [
     whatsappMessage: 'Olá! Vim pelo site e gostaria de um orçamento para reparo em placa.',
     icon: 'chip',
     faqs: [
-      { q: 'Quanto tempo leva o diagnóstico?', a: 'O diagnóstico costuma ficar pronto em 1 a 2 dias úteis. Casos mais complexos podem levar um pouco mais — sempre te avisamos o prazo.' },
+      { q: 'Quanto tempo leva o diagnóstico?', a: 'O diagnóstico costuma ficar pronto em 1 a 2 dias úteis. Casos mais complexos podem levar um pouco mais. Sempre te avisamos o prazo.' },
       { q: 'Todo reparo em placa tem conserto?', a: 'Nem sempre, depende do dano. Por isso fazemos o diagnóstico técnico antes: só falamos em prazo e valor depois de confirmar que dá para reparar.' },
       { q: 'O orçamento tem algum custo?', a: 'Não, o diagnóstico e o orçamento são gratuitos e sem compromisso.' },
       { q: 'Aparelho que caiu na água tem conserto?', a: 'Em muitos casos sim, principalmente se for trazido rápido. Fazemos a avaliação técnica para confirmar.' },
@@ -296,7 +296,7 @@ export const brands: BrandItem[] = [
       'Conserto de Samsung Galaxy na Freguesia do Ó: tela, bateria, conector e mais, com garantia. Orçamento grátis pelo WhatsApp.',
     h1: 'Assistência técnica Samsung na Freguesia do Ó',
     intro:
-      'Atendemos toda a linha Galaxy — da série A aos top de linha S e Note/Ultra. Troca de tela (incluindo AMOLED), bateria, conector, câmera e reparos mais complexos, com peças de qualidade e garantia.',
+      'Atendemos toda a linha Galaxy, da série A aos top de linha S e Note/Ultra. Troca de tela (incluindo AMOLED), bateria, conector, câmera e reparos mais complexos, com peças de qualidade e garantia.',
     commonRepairsLabel: 'Reparos mais comuns em Samsung',
     commonRepairs: [
       'Troca de tela trincada ou com queima de imagem (AMOLED)',
@@ -398,7 +398,7 @@ export const neighborhoods: NeighborhoodItem[] = [
       'Assistência técnica de celular na Freguesia do Ó: troca de tela, bateria e mais, com garantia. Orçamento rápido pelo WhatsApp.',
     h1: 'Assistência técnica de celular na Freguesia do Ó',
     intro:
-      'A Império das Telas fica no coração da Freguesia do Ó, na R. Antônio de Couros, 461. Atendemos todo tipo de reparo — tela, bateria, conector, câmera e placa — com peças de qualidade e garantia. Chame no WhatsApp e receba seu orçamento na hora.',
+      'A Império das Telas fica no coração da Freguesia do Ó, na R. Antônio de Couros, 461. Atendemos todo tipo de reparo, como tela, bateria, conector, câmera e placa, com peças de qualidade e garantia. Chame no WhatsApp e receba seu orçamento na hora.',
     whatsappMessage: 'Olá! Sou da Freguesia do Ó e gostaria de um orçamento.',
   },
   {
