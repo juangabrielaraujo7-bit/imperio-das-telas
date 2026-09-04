@@ -125,20 +125,17 @@ const videos = [
 
     const markNoMedia = () => card.classList.add('no-media');
 
-    // preload="metadata" starts fetching immediately, so the error may already
-    // have fired before this script runs — check the current state first.
-    if (video.error || video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) {
-      markNoMedia();
-      return;
-    }
-
     video.addEventListener('error', markNoMedia, { once: true });
 
-    video.addEventListener('loadedmetadata', () => {
-      if (video.duration === 0 || Number.isNaN(video.duration)) {
-        markNoMedia();
-      }
-    });
+    // Checking networkState right away is unreliable: the browser may not
+    // have started (or finished) the resource selection algorithm yet,
+    // especially for an off-screen video, which produced false positives.
+    // Give it a few seconds to genuinely fail before treating it as missing.
+    setTimeout(() => {
+      const stillNothing = video.readyState === HTMLMediaElement.HAVE_NOTHING;
+      const gaveUp = video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE;
+      if (video.error || (stillNothing && gaveUp)) markNoMedia();
+    }, 5000);
   });
 
   if ('IntersectionObserver' in window) {
