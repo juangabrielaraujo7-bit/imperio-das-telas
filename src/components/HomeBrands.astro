@@ -43,9 +43,19 @@ import Icon from './Icon.astro';
         href={whatsappLink('Olá! Meu aparelho é de outra marca, gostaria de um orçamento.')}
         target="_blank"
         rel="noopener noreferrer nofollow"
+        data-photo
       >
         <div class="brand-photo">
-          <span class="brand-icon-fallback is-static" aria-hidden="true">
+          <span class="brand-glow" aria-hidden="true"></span>
+          <img
+            src="/img/marcas/outras.png"
+            alt="Aparelhos de outras marcas para conserto"
+            loading="lazy"
+            width="320"
+            height="200"
+            style={`animation-delay: ${brands.length * 300}ms`}
+          />
+          <span class="brand-icon-fallback" data-photo-fallback aria-hidden="true">
             <Icon name="other" size={22} />
           </span>
         </div>
@@ -133,10 +143,6 @@ import Icon from './Icon.astro';
     align-items: center;
     justify-content: center;
     transition: background var(--transition), color var(--transition), transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .brand-icon-fallback.is-static {
-    display: flex;
   }
 
   .brand-card.no-media .brand-photo img,
