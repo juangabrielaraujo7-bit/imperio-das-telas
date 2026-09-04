@@ -152,9 +152,9 @@ export const services: ServiceItem[] = [
       { q: 'Trocam bateria de qualquer marca?', a: 'Sim, atendemos iPhone, Samsung, Motorola, Xiaomi e outras marcas.' },
       { q: 'Quanto custa trocar a bateria?', a: 'O valor varia por modelo. Manda a marca e o modelo no WhatsApp e já te passamos o orçamento.' },
     ],
-    image: '/img/servicos/troca-de-bateria.jpg',
-    imageAlt: 'Bateria de celular sendo trocada na bancada da Império das Telas',
-    imageType: 'photo',
+    image: '/img/servicos/troca-de-bateria.png',
+    imageAlt: 'Bateria de celular sendo retirada do aparelho',
+    imageType: 'cutout',
   },
   {
     slug: 'troca-de-conector-de-carga',
@@ -242,9 +242,9 @@ export const services: ServiceItem[] = [
       { q: 'O orçamento tem algum custo?', a: 'Não, o diagnóstico e o orçamento são gratuitos e sem compromisso.' },
       { q: 'Aparelho que caiu na água tem conserto?', a: 'Em muitos casos sim, principalmente se for trazido rápido. Fazemos a avaliação técnica para confirmar.' },
     ],
-    image: '/img/servicos/reparo-em-placa.jpg',
-    imageAlt: 'Técnico fazendo reparo em placa de celular na bancada',
-    imageType: 'photo',
+    image: '/img/servicos/reparo-em-placa.png',
+    imageAlt: 'Placa de celular aberta para reparo técnico',
+    imageType: 'cutout',
   },
 ];
 

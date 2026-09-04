@@ -44,14 +44,15 @@ import Icon from './Icon.astro';
       ))}
 
       <article class="card surface reveal" style={`--reveal-delay: ${Math.min(services.length * 70, 280)}ms`}>
-        <div class="card-media media-photo" data-photo>
+        <div class="card-media media-cutout" data-photo>
+          <span class="media-glow" aria-hidden="true" />
           <img
-            class="media-photo"
-            src="/img/servicos/outros-defeitos.jpg"
-            alt="Detalhe interno de celular aberto para reparo"
+            src="/img/servicos/outros-defeitos.png"
+            alt="Placas e ferramentas de celular aberto para reparo"
             loading="lazy"
             width="360"
             height="280"
+            style={`animation-delay: ${services.length * 300}ms`}
           />
           <span class="card-icon" data-photo-fallback>
             <Icon name="other" size={19} />
