@@ -62,7 +62,7 @@ export type ServiceKey =
   | 'troca-de-tela'
   | 'troca-de-bateria'
   | 'troca-de-conector-de-carga'
-  | 'troca-de-camera'
+  | 'troca-de-tampa-traseira'
   | 'reparo-em-placa';
 
 export interface FaqItem {
@@ -84,6 +84,9 @@ export interface ServiceItem {
   whatsappMessage: string;
   icon: string;
   faqs: FaqItem[];
+  image: string;
+  imageAlt: string;
+  imageType: 'cutout' | 'photo';
 }
 
 // Opções do seletor "Qual a marca do seu aparelho?" nas páginas de serviço.
@@ -118,6 +121,9 @@ export const services: ServiceItem[] = [
       { q: 'Vou perder meus dados trocando a tela?', a: 'Não. A troca de tela não mexe na memória do aparelho, mas por segurança sempre recomendamos ter um backup atualizado.' },
       { q: 'Quanto custa?', a: 'O valor varia por modelo e tipo de dano (só vidro ou conjunto completo). Manda o modelo no WhatsApp e te passamos o orçamento na hora.' },
     ],
+    image: '/img/servicos/troca-de-tela.png',
+    imageAlt: 'Tela de celular trincada antes da troca',
+    imageType: 'cutout',
   },
   {
     slug: 'troca-de-bateria',
@@ -146,6 +152,9 @@ export const services: ServiceItem[] = [
       { q: 'Trocam bateria de qualquer marca?', a: 'Sim, atendemos iPhone, Samsung, Motorola, Xiaomi e outras marcas.' },
       { q: 'Quanto custa trocar a bateria?', a: 'O valor varia por modelo. Manda a marca e o modelo no WhatsApp e já te passamos o orçamento.' },
     ],
+    image: '/img/servicos/troca-de-bateria.jpg',
+    imageAlt: 'Bateria de celular sendo trocada na bancada da Império das Telas',
+    imageType: 'photo',
   },
   {
     slug: 'troca-de-conector-de-carga',
@@ -173,33 +182,39 @@ export const services: ServiceItem[] = [
       { q: 'Isso resolve um celular que não carrega de jeito nenhum?', a: 'Na maior parte dos casos sim. Se não for o conector, fazemos o diagnóstico e te avisamos antes de qualquer custo.' },
       { q: 'Quanto custa a troca do conector?', a: 'O valor varia por modelo. Manda a marca e o modelo no WhatsApp para receber o orçamento.' },
     ],
+    image: '/img/servicos/conector-de-carga.png',
+    imageAlt: 'Conector de carga sendo conectado ao celular',
+    imageType: 'cutout',
   },
   {
-    slug: 'troca-de-camera',
-    title: 'Troca de câmera',
-    shortTitle: 'Câmera',
-    description: 'Câmera frontal ou traseira, com peça de qualidade.',
-    metaTitle: 'Troca de Câmera de Celular na Freguesia do Ó | Império das Telas',
+    slug: 'troca-de-tampa-traseira',
+    title: 'Troca de tampa traseira',
+    shortTitle: 'Tampa traseira',
+    description: 'Troca da tampa traseira trincada ou quebrada, com peça de qualidade.',
+    metaTitle: 'Troca de Tampa Traseira de Celular na Freguesia do Ó | Império das Telas',
     metaDescription:
-      'Câmera embaçada, trincada ou que não abre? Trocamos a câmera do seu celular com garantia. Orçamento grátis pelo WhatsApp.',
-    h1: 'Troca de câmera de celular na Freguesia do Ó',
+      'Tampa traseira trincada ou quebrada? Trocamos com peça de qualidade e garantia, na maioria dos casos no mesmo dia. Orçamento grátis pelo WhatsApp.',
+    h1: 'Troca de tampa traseira de celular na Freguesia do Ó',
     intro:
-      'Foto embaçada, câmera que não abre, mancha na imagem ou lente quebrada? Trocamos a câmera frontal ou traseira do seu aparelho com peça de qualidade e garantia.',
-    signsLabel: 'Sinais de que você precisa trocar a câmera',
+      'Caiu e trincou ou quebrou a parte de trás do aparelho? Trocamos a tampa traseira com peça de qualidade e garantia, sem mexer no restante do celular.',
+    signsLabel: 'Sinais de que você precisa trocar a tampa traseira',
     signs: [
-      'Imagem embaçada ou com manchas',
-      'App da câmera trava',
-      'Foco não funciona',
-      'Lente trincada',
+      'Vidro traseiro trincado ou estilhaçado',
+      'Peça solta ou destacando da lateral',
+      'Corte ou arranhão profundo na tampa',
+      'Perda de proteção contra poeira e umidade',
     ],
-    whatsappMessage: 'Olá! Vim pelo site e gostaria de um orçamento para troca de câmera.',
-    icon: 'camera',
+    whatsappMessage: 'Olá! Vim pelo site e gostaria de um orçamento para troca de tampa traseira.',
+    icon: 'backcover',
     faqs: [
-      { q: 'Quanto tempo leva a troca da câmera?', a: 'Geralmente o mesmo dia, dependendo da disponibilidade da peça para o seu modelo.' },
-      { q: 'A câmera nova tem garantia?', a: 'Sim, toda peça instalada tem garantia.' },
-      { q: 'Trocam câmera frontal e traseira?', a: 'Sim, avaliamos e trocamos a câmera frontal, traseira ou o módulo completo, conforme o caso.' },
-      { q: 'Quanto custa?', a: 'Varia por modelo e pela câmera afetada. Manda o modelo no WhatsApp para receber o orçamento.' },
+      { q: 'Quanto tempo leva a troca da tampa traseira?', a: 'Na maioria dos modelos, o mesmo dia.' },
+      { q: 'A tampa nova tem garantia?', a: 'Sim, toda peça instalada tem garantia.' },
+      { q: 'Preciso trocar a tampa mesmo se o celular ainda funciona normalmente?', a: 'Não é obrigatório, mas o vidro trincado perde a proteção contra poeira e umidade e pode continuar rachando.' },
+      { q: 'Quanto custa?', a: 'Varia por modelo. Manda o modelo no WhatsApp para receber o orçamento.' },
     ],
+    image: '/img/servicos/troca-de-tampa-traseira.png',
+    imageAlt: 'Tampa traseira de celular trincada ao lado da peça nova',
+    imageType: 'cutout',
   },
   {
     slug: 'reparo-em-placa',
@@ -227,6 +242,9 @@ export const services: ServiceItem[] = [
       { q: 'O orçamento tem algum custo?', a: 'Não, o diagnóstico e o orçamento são gratuitos e sem compromisso.' },
       { q: 'Aparelho que caiu na água tem conserto?', a: 'Em muitos casos sim, principalmente se for trazido rápido. Fazemos a avaliação técnica para confirmar.' },
     ],
+    image: '/img/servicos/reparo-em-placa.jpg',
+    imageAlt: 'Técnico fazendo reparo em placa de celular na bancada',
+    imageType: 'photo',
   },
 ];
 

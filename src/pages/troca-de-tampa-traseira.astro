@@ -8,7 +8,7 @@ import PageFaq from '../components/PageFaq.astro';
 import PageLinks from '../components/PageLinks.astro';
 import { services, brandOptions } from '../data/business';
 
-const service = services.find((s) => s.slug === 'troca-de-camera')!;
+const service = services.find((s) => s.slug === 'troca-de-tampa-traseira')!;
 ---
 
 <Layout title={service.metaTitle} description={service.metaDescription}>
@@ -26,14 +26,14 @@ const service = services.find((s) => s.slug === 'troca-de-camera')!;
     helper="Selecione e já chame direto no WhatsApp."
     options={brandOptions}
     placeholder="Selecione a marca"
-    messageTemplate="Olá! Meu aparelho é {option} e quero um orçamento para troca de câmera."
+    messageTemplate="Olá! Meu aparelho é {option} e quero um orçamento para troca de tampa traseira."
   />
 
   <PageGallery />
 
   <StoreShowcase whatsappMessage={service.whatsappMessage} />
 
-  <PageFaq title="Dúvidas sobre a troca de câmera" faqs={service.faqs} />
+  <PageFaq title="Dúvidas sobre a troca de tampa traseira" faqs={service.faqs} />
 
   <PageLinks
     items={[

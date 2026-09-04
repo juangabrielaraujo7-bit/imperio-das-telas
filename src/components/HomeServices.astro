@@ -14,30 +14,58 @@ import Icon from './Icon.astro';
     <div class="grid grid-3">
       {services.map((service, i) => (
         <article class="card surface reveal" style={`--reveal-delay: ${Math.min(i * 70, 280)}ms`}>
-          <div class="card-icon">
-            <Icon name={service.icon} />
+          <div class={`card-media media-${service.imageType}`} data-photo>
+            {service.imageType === 'cutout' && <span class="media-glow" aria-hidden="true" />}
+            <img
+              class={service.imageType === 'photo' ? 'media-photo' : ''}
+              src={service.image}
+              alt={service.imageAlt}
+              loading="lazy"
+              width="360"
+              height="280"
+              style={service.imageType === 'cutout' ? `animation-delay: ${i * 300}ms` : ''}
+            />
+            <span class="card-icon" data-photo-fallback>
+              <Icon name={service.icon} size={19} />
+            </span>
           </div>
-          <h3>{service.title}</h3>
-          <p>{service.description}</p>
-          <div class="card-actions">
-            <a class="details" href={`/${service.slug}`}>Ver detalhes</a>
-            <a class="wa-link" href={whatsappLink(service.whatsappMessage)} target="_blank" rel="noopener noreferrer nofollow">
-              WhatsApp
-            </a>
+
+          <div class="card-body">
+            <h3>{service.title}</h3>
+            <p>{service.description}</p>
+            <div class="card-actions">
+              <a class="details" href={`/${service.slug}`}>Ver detalhes</a>
+              <a class="wa-link" href={whatsappLink(service.whatsappMessage)} target="_blank" rel="noopener noreferrer nofollow">
+                WhatsApp
+              </a>
+            </div>
           </div>
         </article>
       ))}
 
       <article class="card surface reveal" style={`--reveal-delay: ${Math.min(services.length * 70, 280)}ms`}>
-        <div class="card-icon">
-          <Icon name="other" />
+        <div class="card-media media-photo" data-photo>
+          <img
+            class="media-photo"
+            src="/img/servicos/outros-defeitos.jpg"
+            alt="Detalhe interno de celular aberto para reparo"
+            loading="lazy"
+            width="360"
+            height="280"
+          />
+          <span class="card-icon" data-photo-fallback>
+            <Icon name="other" size={19} />
+          </span>
         </div>
-        <h3>Outros defeitos</h3>
-        <p>Alto-falante, microfone, botões, conector de fone e outros reparos.</p>
-        <div class="card-actions">
-          <a class="wa-link" href={whatsappLink('Olá! Vim pelo site e tenho outro defeito no meu aparelho, gostaria de um orçamento.')} target="_blank" rel="noopener noreferrer nofollow">
-            Falar no WhatsApp
-          </a>
+
+        <div class="card-body">
+          <h3>Outros defeitos</h3>
+          <p>Alto-falante, microfone, botões, conector de fone e outros reparos.</p>
+          <div class="card-actions">
+            <a class="wa-link" href={whatsappLink('Olá! Vim pelo site e tenho outro defeito no meu aparelho, gostaria de um orçamento.')} target="_blank" rel="noopener noreferrer nofollow">
+              Falar no WhatsApp
+            </a>
+          </div>
         </div>
       </article>
     </div>
@@ -46,7 +74,10 @@ import Icon from './Icon.astro';
 
 <style>
   .card {
-    padding: 28px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
     transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1), border-color var(--transition), box-shadow var(--transition);
   }
 
@@ -56,31 +87,129 @@ import Icon from './Icon.astro';
     box-shadow: var(--shadow-md);
   }
 
-  .card:hover .card-icon {
-    transform: rotate(-10deg) scale(1.15);
-    background: var(--whatsapp);
-  }
-
-  .card-icon {
-    width: 52px;
-    height: 52px;
+  .card-media {
+    position: relative;
+    width: 100%;
+    height: 152px;
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .media-cutout,
+  .media-icon-only {
+    background: var(--bg);
+  }
+
+  .media-glow {
+    position: absolute;
+    width: 68%;
+    height: 38px;
+    left: 50%;
+    bottom: 20px;
+    translate: -50% 0;
+    background: radial-gradient(ellipse at center, rgba(10, 10, 12, 0.18) 0%, rgba(10, 10, 12, 0) 72%);
+    pointer-events: none;
+  }
+
+  .media-cutout img {
+    position: relative;
+    max-width: 74%;
+    max-height: 80%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 14px 12px rgba(10, 10, 12, 0.18));
+    animation: card-float 3.6s ease-in-out infinite;
+  }
+
+  @keyframes card-float {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 -8px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .media-cutout img {
+      animation: none;
+    }
+  }
+
+  .media-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 500ms ease;
+  }
+
+  .card:hover .media-photo {
+    transform: scale(1.07);
+  }
+
+  .media-icon-only img {
+    display: none;
+  }
+
+  .card-icon {
+    position: absolute;
+    left: 18px;
+    bottom: -16px;
+    width: 44px;
+    height: 44px;
     border-radius: 12px;
     background: var(--ink);
     color: #fff;
-    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 18px rgba(10, 10, 12, 0.25);
+    border: 3px solid var(--surface);
+    z-index: 1;
     transition: transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1), background 250ms ease;
   }
 
-  .card h3 {
+  .card-icon.is-plain {
+    position: static;
+    border: none;
+    box-shadow: none;
+  }
+
+  .card-media.no-media img,
+  .card-media.no-media .media-glow {
+    display: none;
+  }
+
+  .card-media.no-media .card-icon {
+    position: static;
+    border: none;
+    box-shadow: none;
+  }
+
+  .card:hover .card-icon {
+    transform: rotate(-10deg) scale(1.12);
+    background: var(--whatsapp);
+  }
+
+  .card-body {
+    padding: 30px 24px 22px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .card-body h3 {
     margin-bottom: 8px;
   }
 
-  .card p {
+  .card-body p {
     margin-bottom: 20px;
     font-size: 0.92rem;
+    flex: 1;
   }
 
   .card-actions {
@@ -109,3 +238,19 @@ import Icon from './Icon.astro';
     color: var(--ink);
   }
 </style>
+
+<script>
+  document.querySelectorAll('[data-photo]').forEach((media) => {
+    const img = media.querySelector('img');
+    if (!img) return;
+
+    const markNoMedia = () => media.classList.add('no-media');
+
+    if (img.complete && img.naturalWidth === 0) {
+      markNoMedia();
+      return;
+    }
+
+    img.addEventListener('error', markNoMedia, { once: true });
+  });
+</script>
