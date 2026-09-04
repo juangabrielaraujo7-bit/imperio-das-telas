@@ -1,11 +1,23 @@
 ---
+const videos = [
+  {
+    file: 'bancada-servico.mp4',
+    poster: 'bancada-servico.jpg',
+    alt: 'Técnico realizando reparo de celular na bancada da Império das Telas',
+    hasAudio: false,
+  },
+  {
+    file: 'loja-profissional.mp4',
+    poster: 'loja-profissional.jpg',
+    alt: 'Técnico da Império das Telas apresentando a loja, com áudio',
+    hasAudio: true,
+  },
+];
+
 const photos = [
-  { file: 'loja-1.jpg', alt: 'Fachada da loja Império das Telas na Freguesia do Ó' },
-  { file: 'loja-2.jpg', alt: 'Balcão de atendimento da assistência técnica na Freguesia do Ó' },
-  { file: 'bancada-1.jpg', alt: 'Bancada de reparo de celulares da Império das Telas' },
-  { file: 'bancada-2.jpg', alt: 'Técnico realizando conserto de celular na bancada' },
-  { file: 'loja-3.jpg', alt: 'Interior da loja Império das Telas na Freguesia do Ó' },
-  { file: 'bancada-3.jpg', alt: 'Ferramentas e equipamentos de reparo de celular' },
+  { file: 'loja-interior.jpg', alt: 'Interior da loja Império das Telas na Freguesia do Ó' },
+  { file: 'loja-fachada-dia.jpg', alt: 'Fachada da loja Império das Telas durante o dia' },
+  { file: 'loja-fachada-noite.jpg', alt: 'Fachada da loja Império das Telas à noite' },
 ];
 ---
 
@@ -23,18 +35,38 @@ const photos = [
       </div>
     </div>
 
+    <div class="grid grid-2 gallery">
+      {videos.map((video, i) => (
+        <div class="media surface reveal reveal-scale" style={`--reveal-delay: ${i * 90}ms`} data-media data-video-card>
+          <video
+            class="media-content"
+            muted={!video.hasAudio}
+            loop={!video.hasAudio}
+            controls={video.hasAudio}
+            playsinline
+            preload="metadata"
+            poster={`/img/videos/${video.poster}`}
+            data-src={`/videos/${video.file}`}
+          >
+            <source src={`/videos/${video.file}`} type="video/mp4" />
+          </video>
+          <span class="media-fallback" data-media-fallback>Vídeo em breve</span>
+        </div>
+      ))}
+    </div>
+
     <div class="grid grid-3 gallery">
       {photos.map((photo, i) => (
-        <div class="photo surface reveal reveal-scale" style={`--reveal-delay: ${(i % 3) * 90}ms`} data-photo>
+        <div class="media surface reveal reveal-scale" style={`--reveal-delay: ${i * 90}ms`} data-media>
           <img
+            class="media-content"
             src={`/img/loja/${photo.file}`}
             alt={photo.alt}
             loading="lazy"
             width="480"
             height="360"
-            data-photo-img
           />
-          <span class="photo-fallback" data-photo-fallback>Foto em breve</span>
+          <span class="media-fallback" data-media-fallback>Foto em breve</span>
         </div>
       ))}
     </div>
@@ -48,28 +80,33 @@ const photos = [
   }
 
   .gallery {
-    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 24px;
   }
 
-  .photo {
+  .gallery:last-child {
+    margin-bottom: 0;
+  }
+
+  .media {
     position: relative;
     aspect-ratio: 4 / 3;
     overflow: hidden;
     padding: 0;
+    background: var(--bg);
   }
 
-  .photo img {
+  .media-content {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     transition: transform 500ms ease;
   }
 
-  .photo:hover img {
-    transform: scale(1.06);
+  .media:hover .media-content {
+    transform: scale(1.04);
   }
 
-  .photo-fallback {
+  .media-fallback {
     position: absolute;
     inset: 0;
     display: none;
@@ -83,34 +120,70 @@ const photos = [
     letter-spacing: 0.04em;
   }
 
-  .photo.no-media img {
+  .media.no-media .media-content {
     display: none;
   }
 
-  .photo.no-media .photo-fallback {
+  .media.no-media .media-fallback {
     display: flex;
   }
 
   @media (max-width: 620px) {
-    .gallery {
+    .grid-3.gallery {
       grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .grid-2.gallery {
+      grid-template-columns: 1fr;
     }
   }
 </style>
 
 <script>
-  document.querySelectorAll<HTMLElement>('[data-photo]').forEach((card) => {
-    const img = card.querySelector('img');
-    if (!img) return;
+  document.querySelectorAll<HTMLElement>('[data-media]').forEach((card) => {
+    const media = card.querySelector<HTMLImageElement | HTMLVideoElement>('.media-content');
+    if (!media) return;
 
     const markNoMedia = () => card.classList.add('no-media');
 
-    // The image may have already failed to load before this script runs.
-    if (img.complete && img.naturalWidth === 0) {
-      markNoMedia();
-      return;
+    if (media instanceof HTMLVideoElement) {
+      // preload="metadata" starts fetching immediately, so the error may
+      // already have fired before this script runs — check current state first.
+      if (media.error || media.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) {
+        markNoMedia();
+        return;
+      }
+      media.addEventListener('error', markNoMedia, { once: true });
+      media.addEventListener('loadedmetadata', () => {
+        if (media.duration === 0 || Number.isNaN(media.duration)) markNoMedia();
+      });
+    } else {
+      if (media.complete && media.naturalWidth === 0) {
+        markNoMedia();
+        return;
+      }
+      media.addEventListener('error', markNoMedia, { once: true });
     }
-
-    img.addEventListener('error', markNoMedia, { once: true });
   });
+
+  // Autoplay only the silent, looping videos when they scroll into view.
+  if ('IntersectionObserver' in window) {
+    const playObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const video = entry.target as HTMLVideoElement;
+          if (entry.isIntersecting) {
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    document.querySelectorAll<HTMLVideoElement>('[data-video-card] video[loop]').forEach((v) => playObserver.observe(v));
+  }
 </script>
