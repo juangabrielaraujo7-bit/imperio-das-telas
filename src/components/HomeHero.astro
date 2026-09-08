@@ -1,10 +1,21 @@
 ---
 import WhatsappCta from './WhatsappCta.astro';
+import Icon from './Icon.astro';
 ---
 
 <section class="hero">
   <div class="container hero-inner">
-    <h1 class="hero-title reveal reveal-left">Seu celular quebrou?<br />A Império das Telas resolve.</h1>
+    <h1 class="hero-title reveal reveal-left">
+      Seu celular quebrou?<br />
+      A Império das Telas resolve
+      <span class="title-trail" aria-hidden="true">
+        <span class="trail-chevron"><Icon name="arrow" size={20} /></span>
+        <span class="trail-chevron"><Icon name="arrow" size={20} /></span>
+        <span class="trail-chevron"><Icon name="arrow" size={20} /></span>
+        <span class="trail-chevron"><Icon name="arrow" size={20} /></span>
+      </span>
+      <img class="title-logo" src="/img/logo-icon.png" alt="Império das Telas" width="452" height="326" />
+    </h1>
 
     <div class="hero-device reveal reveal-right" style="--reveal-delay: 120ms" aria-hidden="true">
       <span class="hero-smoke" aria-hidden="true"></span>
@@ -80,6 +91,49 @@ import WhatsappCta from './WhatsappCta.astro';
     position: relative;
     z-index: 1;
     max-width: 15ch;
+  }
+
+  .title-trail {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  .trail-chevron {
+    display: inline-flex;
+    margin-left: -8px;
+    color: var(--ink);
+  }
+
+  .trail-chevron:first-child {
+    margin-left: 0;
+  }
+
+  .trail-chevron:nth-child(1) {
+    opacity: 0.12;
+  }
+
+  .trail-chevron:nth-child(2) {
+    opacity: 0.32;
+  }
+
+  .trail-chevron:nth-child(3) {
+    opacity: 0.62;
+  }
+
+  .trail-chevron:nth-child(4) {
+    opacity: 1;
+    color: var(--whatsapp);
+  }
+
+  .title-logo {
+    display: inline-block;
+    height: 0.85em;
+    width: auto;
+    vertical-align: middle;
+    margin-left: 10px;
+    translate: 0 -0.05em;
   }
 
   .hero-copy {
