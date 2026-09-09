@@ -2,6 +2,6 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://imperiodastelas.com.br',
+  site: 'https://imperiodastelascelular.com.br',
   integrations: [sitemap()],
 });
